@@ -25,7 +25,7 @@ export default function Navbar({ visible }) {
       }}
     >
       <Link to="/">
-        <img src="/tasmedlogo.png" alt="Tasmed" style={{ height: '36px', objectFit: 'contain' }} />
+        <img src="/tasmedlogo.png" alt="Tasmed" style={{ height: '52px', objectFit: 'contain' }} />
       </Link>
 
       <ul style={{ display: 'flex', gap: '2.5rem', listStyle: 'none', margin: 0, padding: 0 }}>
