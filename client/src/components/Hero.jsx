@@ -38,7 +38,7 @@ export default function Hero({ visible }) {
         <div style={{
           position: 'absolute',
           inset: 0,
-          background: 'linear-gradient(to right, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.55) 45%, rgba(0,0,0,0.0) 75%)',
+          background: 'linear-gradient(to right, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.0) 78%)',
         }} />
 
         {/* Content */}
@@ -50,7 +50,7 @@ export default function Hero({ visible }) {
           flexDirection: 'column',
           justifyContent: 'center',
           padding: '0 3.5rem',
-          maxWidth: '720px',
+          maxWidth: '860px',
         }}>
           {/* Badge */}
           <motion.div
@@ -79,9 +79,9 @@ export default function Hero({ visible }) {
             transition={fadeUp(0.25).transition}
             style={{
               color: '#fff',
-              fontSize: 'clamp(2rem, 3.4vw, 3.4rem)',
+              fontSize: 'clamp(3rem, 4.5vw, 4.5rem)',
               fontWeight: 700,
-              lineHeight: 1.1,
+              lineHeight: 1.08,
               letterSpacing: '-0.02em',
               marginBottom: '1.5rem',
               fontFamily: "'Outfit', sans-serif",
