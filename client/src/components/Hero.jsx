@@ -114,13 +114,14 @@ export default function Hero({ visible }) {
           >
             <motion.a
               href="/about"
-              whileHover={{ scale: 1.05, background: 'rgba(255,255,255,0.15)' }}
+              whileHover={{ background: '#000', color: '#fff', border: '1.5px solid #fff' }}
               whileTap={{ scale: 0.97 }}
               style={{
                 display: 'inline-block',
                 padding: '0.75rem 2rem',
                 background: '#fff',
                 color: '#000',
+                border: '1.5px solid #fff',
                 borderRadius: '999px',
                 fontWeight: 600,
                 fontSize: '0.95rem',
