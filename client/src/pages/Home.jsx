@@ -7,10 +7,10 @@ export default function Home() {
   const [loaded, setLoaded] = useState(false)
 
   return (
-    <>
+    <div style={{ background: '#f0eeea', minHeight: '100vh' }}>
       <LoadingScreen onComplete={() => setLoaded(true)} />
       <Navbar visible={loaded} />
       <Hero visible={loaded} />
-    </>
+    </div>
   )
 }
