@@ -79,16 +79,16 @@ export default function Hero({ visible }) {
             transition={fadeUp(0.25).transition}
             style={{
               color: '#fff',
-              fontSize: 'clamp(2rem, 3.6vw, 3.6rem)',
+              fontSize: 'clamp(2rem, 3.4vw, 3.4rem)',
               fontWeight: 700,
               lineHeight: 1.1,
               letterSpacing: '-0.02em',
               marginBottom: '1.5rem',
               fontFamily: "'Outfit', sans-serif",
-              whiteSpace: 'nowrap',
             }}
           >
-            Committed Towards<br />Healthier Life.
+            <span style={{ display: 'block' }}>Committed Towards</span>
+            <span style={{ display: 'block' }}>Healthier Life.</span>
           </motion.h1>
 
           {/* Subtext */}
@@ -113,24 +113,12 @@ export default function Hero({ visible }) {
             animate={visible ? fadeUp(0.55).animate : fadeUp(0.55).initial}
             transition={fadeUp(0.55).transition}
           >
-            <motion.a
+            <a
               href="/about"
-              whileHover={{ background: '#000', color: '#fff', border: '1.5px solid #fff' }}
-              whileTap={{ scale: 0.97 }}
-              style={{
-                display: 'inline-block',
-                padding: '0.75rem 2rem',
-                background: '#fff',
-                color: '#000',
-                border: '1.5px solid #fff',
-                borderRadius: '999px',
-                fontWeight: 600,
-                fontSize: '0.95rem',
-                textDecoration: 'none',
-              }}
+              className="about-btn"
             >
               About Us
-            </motion.a>
+            </a>
           </motion.div>
         </div>
 
