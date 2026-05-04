@@ -79,10 +79,10 @@ export default function Hero({ visible }) {
             transition={fadeUp(0.25).transition}
             style={{
               color: '#fff',
-              fontSize: 'clamp(2.8rem, 5vw, 5rem)',
+              fontSize: 'clamp(2rem, 3.4vw, 3.4rem)',
               fontWeight: 700,
-              lineHeight: 1.05,
-              letterSpacing: '-0.03em',
+              lineHeight: 1.1,
+              letterSpacing: '-0.02em',
               marginBottom: '1.5rem',
               fontFamily: "'Outfit', sans-serif",
             }}
