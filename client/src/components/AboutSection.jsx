@@ -103,7 +103,7 @@ export default function AboutSection() {
 
             <h3 style={{
               fontSize: '50px',
-              fontWeight: 700,
+              fontWeight: 500,
               color: '#1a2f7a',
               lineHeight: 1.15,
               marginBottom: '1.5rem',
@@ -116,7 +116,7 @@ export default function AboutSection() {
               fontSize: '20px',
               color: '#666',
               lineHeight: 1.7,
-              maxWidth: '380px',
+              maxWidth: '300px',
             }}>
               We Apply Research, Technology And Science To Innovate And Develop High Quality
               Medicines To Treat Chronic Ailments In Our 2 GMP Certified & Schedule-M
@@ -208,9 +208,9 @@ export default function AboutSection() {
               >
                 <h4 style={{
                   color: '#fff',
-                  fontSize: '2rem',
-                  fontWeight: 300,
-                  letterSpacing: '0.12em',
+                  fontSize: '2.8rem',
+                  fontWeight: 400,
+                  letterSpacing: '0.08em',
                   marginBottom: '0.5rem',
                   fontFamily: "'Outfit', sans-serif",
                 }}>
