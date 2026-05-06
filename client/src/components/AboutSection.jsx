@@ -73,7 +73,7 @@ export default function AboutSection() {
       </motion.div>
 
       {/* 2-col layout */}
-      <div style={{ display: 'flex', gap: '5rem', alignItems: 'flex-start', justifyContent: 'flex-end' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
 
         {/* Left — fixed content, parallel to card height */}
         <motion.div
