@@ -2,6 +2,7 @@ import { useState } from 'react'
 import LoadingScreen from '../components/LoadingScreen'
 import Navbar from '../components/Navbar'
 import Hero from '../components/Hero'
+import AboutSection from '../components/AboutSection'
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false)
@@ -11,6 +12,7 @@ export default function Home() {
       <LoadingScreen onComplete={() => setLoaded(true)} />
       <Navbar visible={loaded} />
       <Hero visible={loaded} />
+      <AboutSection />
     </div>
   )
 }
