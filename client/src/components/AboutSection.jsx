@@ -73,7 +73,7 @@ export default function AboutSection() {
       </motion.div>
 
       {/* 2-col layout */}
-      <div style={{ display: 'flex', gap: '5rem', alignItems: 'flex-start' }}>
+      <div style={{ display: 'flex', gap: '5rem', alignItems: 'flex-start', justifyContent: 'flex-end' }}>
 
         {/* Left — fixed content, parallel to card height */}
         <motion.div
@@ -81,7 +81,7 @@ export default function AboutSection() {
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
           style={{
-            flex: '0 0 500px',
+            flex: '0 0 420px',
             height: '500px',
             display: 'flex',
             flexDirection: 'column',
