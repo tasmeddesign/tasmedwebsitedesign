@@ -81,7 +81,7 @@ export default function AboutSection() {
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
           style={{
-            flex: 1,
+            flex: '0 0 460px',
             height: '500px',
             display: 'flex',
             flexDirection: 'column',
@@ -116,7 +116,6 @@ export default function AboutSection() {
               fontSize: '20px',
               color: '#666',
               lineHeight: 1.7,
-              maxWidth: '300px',
             }}>
               We Apply Research, Technology And Science To Innovate And Develop High Quality
               Medicines To Treat Chronic Ailments In Our 2 GMP Certified & Schedule-M
@@ -169,7 +168,8 @@ export default function AboutSection() {
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.3 }}
           style={{
-            flex: '0 0 950px',
+            flex: 1,
+            maxWidth: '950px',
             height: '500px',
             borderRadius: '20px',
             overflow: 'hidden',
