@@ -25,7 +25,6 @@ const SLIDES = [
 ]
 
 const INTERVAL = 4000
-const CARD_HEIGHT = 400
 
 export default function AboutSection() {
   const [current, setCurrent] = useState(0)
@@ -40,20 +39,22 @@ export default function AboutSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} style={{ background: '#f0eeea', padding: '6rem 3.5rem' }}>
-
+    <section
+      ref={sectionRef}
+      style={{ background: '#f0eeea', padding: '3rem 150px 5rem' }}
+    >
       {/* Top centered heading */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.7, ease: 'easeOut' }}
-        style={{ textAlign: 'center', marginBottom: '5rem' }}
+        style={{ textAlign: 'center', marginBottom: '4rem' }}
       >
         <h2 style={{
           fontSize: 'clamp(2rem, 4vw, 3.5rem)',
           fontWeight: 400,
           color: '#1a1a1a',
-          marginBottom: '1.2rem',
+          marginBottom: '1rem',
           fontFamily: "'Outfit', sans-serif",
           letterSpacing: '-0.01em',
         }}>
@@ -71,23 +72,22 @@ export default function AboutSection() {
         </p>
       </motion.div>
 
-      {/* Bottom 2-col layout */}
-      <div style={{ display: 'flex', gap: '5rem', alignItems: 'flex-start' }}>
+      {/* 2-col layout */}
+      <div style={{ display: 'flex', gap: '3rem', alignItems: 'flex-start' }}>
 
-        {/* Left — fixed content, same height as card */}
+        {/* Left — fixed content, parallel to card height */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
           style={{
-            flex: '0 0 36%',
-            height: `${CARD_HEIGHT}px`,
+            flex: 1,
+            height: '500px',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
           }}
         >
-          {/* Top part */}
           <div>
             <span style={{
               display: 'inline-block',
@@ -102,21 +102,21 @@ export default function AboutSection() {
             </span>
 
             <h3 style={{
-              fontSize: 'clamp(1.6rem, 2.5vw, 2.4rem)',
+              fontSize: '50px',
               fontWeight: 700,
               color: '#1a2f7a',
-              lineHeight: 1.2,
-              marginBottom: '1.2rem',
+              lineHeight: 1.15,
+              marginBottom: '1.5rem',
               fontFamily: "'Outfit', sans-serif",
             }}>
               Innovation & Ethics<br />At The Core
             </h3>
 
             <p style={{
-              fontSize: '0.92rem',
+              fontSize: '20px',
               color: '#666',
-              lineHeight: 1.75,
-              maxWidth: '360px',
+              lineHeight: 1.7,
+              maxWidth: '380px',
             }}>
               We Apply Research, Technology And Science To Innovate And Develop High Quality
               Medicines To Treat Chronic Ailments In Our 2 GMP Certified & Schedule-M
@@ -124,7 +124,7 @@ export default function AboutSection() {
             </p>
           </div>
 
-          {/* Bottom — progress dots */}
+          {/* Progress dots at bottom */}
           <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
             {SLIDES.map((_, i) => (
               <button
@@ -163,14 +163,14 @@ export default function AboutSection() {
           </div>
         </motion.div>
 
-        {/* Right — carousel */}
+        {/* Right — carousel card: W=950, H=500 */}
         <motion.div
           initial={{ opacity: 0, x: 30 }}
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.3 }}
           style={{
-            flex: 1,
-            height: `${CARD_HEIGHT}px`,
+            flex: '0 0 950px',
+            height: '500px',
             borderRadius: '20px',
             overflow: 'hidden',
             position: 'relative',
@@ -184,44 +184,31 @@ export default function AboutSection() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5, ease: 'easeInOut' }}
-              style={{
-                position: 'absolute',
-                inset: 0,
-              }}
+              style={{ position: 'absolute', inset: 0 }}
             >
               <img
                 src={SLIDES[current].image}
                 alt={SLIDES[current].title}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  display: 'block',
-                }}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
               />
 
-              {/* Strong bottom gradient for text readability */}
+              {/* Bottom gradient */}
               <div style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 45%, rgba(0,0,0,0.0) 70%)',
+                background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.25) 45%, transparent 70%)',
               }} />
 
-              {/* Text overlay */}
+              {/* Text */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.25 }}
-                style={{
-                  position: 'absolute',
-                  bottom: '1.8rem',
-                  left: '1.8rem',
-                  right: '1.8rem',
-                }}
+                style={{ position: 'absolute', bottom: '2rem', left: '2rem', right: '2rem' }}
               >
                 <h4 style={{
                   color: '#fff',
-                  fontSize: 'clamp(1.4rem, 2.2vw, 2rem)',
+                  fontSize: '2rem',
                   fontWeight: 300,
                   letterSpacing: '0.12em',
                   marginBottom: '0.5rem',
@@ -230,10 +217,10 @@ export default function AboutSection() {
                   {SLIDES[current].title}
                 </h4>
                 <p style={{
-                  color: 'rgba(255,255,255,0.8)',
-                  fontSize: '0.88rem',
+                  color: 'rgba(255,255,255,0.82)',
+                  fontSize: '0.9rem',
                   lineHeight: 1.65,
-                  maxWidth: '400px',
+                  maxWidth: '420px',
                 }}>
                   {SLIDES[current].desc}
                 </p>
