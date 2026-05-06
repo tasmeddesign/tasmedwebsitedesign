@@ -25,6 +25,7 @@ const SLIDES = [
 ]
 
 const INTERVAL = 4000
+const CARD_HEIGHT = 400
 
 export default function AboutSection() {
   const [current, setCurrent] = useState(0)
@@ -71,51 +72,59 @@ export default function AboutSection() {
       </motion.div>
 
       {/* Bottom 2-col layout */}
-      <div style={{ display: 'flex', gap: '5rem', alignItems: 'center' }}>
+      <div style={{ display: 'flex', gap: '5rem', alignItems: 'flex-start' }}>
 
-        {/* Left — fixed content */}
+        {/* Left — fixed content, same height as card */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
-          style={{ flex: '0 0 36%' }}
+          style={{
+            flex: '0 0 36%',
+            height: `${CARD_HEIGHT}px`,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+          }}
         >
-          <span style={{
-            display: 'inline-block',
-            border: '1px solid #aaa',
-            borderRadius: '999px',
-            padding: '0.3rem 1.1rem',
-            fontSize: '0.8rem',
-            color: '#666',
-            marginBottom: '2.2rem',
-          }}>
-            Who We Are
-          </span>
+          {/* Top part */}
+          <div>
+            <span style={{
+              display: 'inline-block',
+              border: '1px solid #aaa',
+              borderRadius: '999px',
+              padding: '0.3rem 1.1rem',
+              fontSize: '0.8rem',
+              color: '#666',
+              marginBottom: '2rem',
+            }}>
+              Who We Are
+            </span>
 
-          <h3 style={{
-            fontSize: 'clamp(1.8rem, 2.8vw, 2.8rem)',
-            fontWeight: 700,
-            color: '#1a2f7a',
-            lineHeight: 1.15,
-            marginBottom: '1.5rem',
-            fontFamily: "'Outfit', sans-serif",
-          }}>
-            Innovation & Ethics<br />At The Core
-          </h3>
+            <h3 style={{
+              fontSize: 'clamp(1.6rem, 2.5vw, 2.4rem)',
+              fontWeight: 700,
+              color: '#1a2f7a',
+              lineHeight: 1.2,
+              marginBottom: '1.2rem',
+              fontFamily: "'Outfit', sans-serif",
+            }}>
+              Innovation & Ethics<br />At The Core
+            </h3>
 
-          <p style={{
-            fontSize: '0.95rem',
-            color: '#666',
-            lineHeight: 1.75,
-            marginBottom: '3rem',
-            maxWidth: '380px',
-          }}>
-            We Apply Research, Technology And Science To Innovate And Develop High Quality
-            Medicines To Treat Chronic Ailments In Our 2 GMP Certified & Schedule-M
-            Complied Manufacturing Units.
-          </p>
+            <p style={{
+              fontSize: '0.92rem',
+              color: '#666',
+              lineHeight: 1.75,
+              maxWidth: '360px',
+            }}>
+              We Apply Research, Technology And Science To Innovate And Develop High Quality
+              Medicines To Treat Chronic Ailments In Our 2 GMP Certified & Schedule-M
+              Complied Manufacturing Units.
+            </p>
+          </div>
 
-          {/* Progress dot indicators */}
+          {/* Bottom — progress dots */}
           <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
             {SLIDES.map((_, i) => (
               <button
@@ -129,7 +138,7 @@ export default function AboutSection() {
                   width: i === current ? '40px' : '10px',
                   borderRadius: '999px',
                   background: i === current ? 'rgba(26,47,122,0.15)' : '#ccc',
-                  transition: 'width 0.3s ease, background 0.3s ease',
+                  transition: 'width 0.3s ease',
                   overflow: 'hidden',
                   position: 'relative',
                 }}>
@@ -141,8 +150,7 @@ export default function AboutSection() {
                       transition={{ duration: INTERVAL / 1000, ease: 'linear' }}
                       style={{
                         position: 'absolute',
-                        top: 0,
-                        left: 0,
+                        top: 0, left: 0,
                         height: '100%',
                         background: '#1a2f7a',
                         borderRadius: '999px',
@@ -162,19 +170,20 @@ export default function AboutSection() {
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.3 }}
           style={{
             flex: 1,
-            position: 'relative',
+            height: `${CARD_HEIGHT}px`,
             borderRadius: '20px',
             overflow: 'hidden',
-            aspectRatio: '16 / 10',
+            position: 'relative',
+            background: '#111',
           }}
         >
           <AnimatePresence mode="wait">
             <motion.div
               key={current}
-              initial={{ opacity: 0, scale: 1.04 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.97 }}
-              transition={{ duration: 0.6, ease: 'easeInOut' }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5, ease: 'easeInOut' }}
               style={{
                 position: 'absolute',
                 inset: 0,
@@ -183,43 +192,48 @@ export default function AboutSection() {
               <img
                 src={SLIDES[current].image}
                 alt={SLIDES[current].title}
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  display: 'block',
+                }}
               />
 
-              {/* Bottom gradient overlay */}
+              {/* Strong bottom gradient for text readability */}
               <div style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.08) 55%)',
+                background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 45%, rgba(0,0,0,0.0) 70%)',
               }} />
 
               {/* Text overlay */}
               <motion.div
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+                transition={{ duration: 0.4, delay: 0.25 }}
                 style={{
                   position: 'absolute',
-                  bottom: '2rem',
-                  left: '2rem',
-                  right: '2rem',
+                  bottom: '1.8rem',
+                  left: '1.8rem',
+                  right: '1.8rem',
                 }}
               >
                 <h4 style={{
                   color: '#fff',
-                  fontSize: 'clamp(1.4rem, 2.5vw, 2.2rem)',
+                  fontSize: 'clamp(1.4rem, 2.2vw, 2rem)',
                   fontWeight: 300,
-                  letterSpacing: '0.1em',
-                  marginBottom: '0.6rem',
+                  letterSpacing: '0.12em',
+                  marginBottom: '0.5rem',
                   fontFamily: "'Outfit', sans-serif",
                 }}>
                   {SLIDES[current].title}
                 </h4>
                 <p style={{
-                  color: 'rgba(255,255,255,0.82)',
-                  fontSize: '0.9rem',
+                  color: 'rgba(255,255,255,0.8)',
+                  fontSize: '0.88rem',
                   lineHeight: 1.65,
-                  maxWidth: '420px',
+                  maxWidth: '400px',
                 }}>
                   {SLIDES[current].desc}
                 </p>
