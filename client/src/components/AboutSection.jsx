@@ -41,14 +41,14 @@ export default function AboutSection() {
   return (
     <section
       ref={sectionRef}
-      style={{ background: '#f0eeea', padding: '8rem 150px 5rem' }}
+      style={{ background: '#f0eeea', padding: '5rem 150px 5rem' }}
     >
       {/* Top centered heading */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.7, ease: 'easeOut' }}
-        style={{ textAlign: 'center', marginBottom: '4rem' }}
+        style={{ textAlign: 'center', marginBottom: '5rem' }}
       >
         <h2 style={{
           fontSize: 'clamp(2rem, 4vw, 3.5rem)',
