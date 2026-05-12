@@ -123,7 +123,7 @@ function Card({ area, index, isInView }) {
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, ease: 'easeOut', delay: 0.08 + index * 0.06 }}
-      whileHover={{ scale: 1.04 }}
+      whileHover={{ scale: 1.04, transition: { duration: 0.15, ease: 'easeOut' } }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
