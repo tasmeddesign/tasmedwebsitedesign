@@ -45,78 +45,72 @@ export default function TherapeuticAreas() {
 
   return (
     <section ref={sectionRef} style={{ padding: '5rem 150px 5rem' }}>
+
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.7, ease: 'easeOut' }}
+        style={{ textAlign: 'center', marginBottom: '3rem' }}
+      >
+        <span style={{
+          display: 'inline-block',
+          border: '1px solid #bbb',
+          borderRadius: '999px',
+          padding: '0.3rem 1.2rem',
+          fontSize: '0.8rem',
+          color: '#888',
+          marginBottom: '1.25rem',
+          letterSpacing: '0.03em',
+        }}>
+          Our Portfolio
+        </span>
+
+        <h2 style={{
+          fontSize: 'clamp(2.2rem, 3.5vw, 3.2rem)',
+          fontWeight: 700,
+          color: '#1a2f7a',
+          marginBottom: '0.9rem',
+          fontFamily: "'Outfit', sans-serif",
+          letterSpacing: '-0.02em',
+        }}>
+          Therapeutic Areas
+        </h2>
+
+        <p style={{
+          fontSize: '0.95rem',
+          color: '#aaa',
+          maxWidth: '420px',
+          margin: '0 auto',
+          lineHeight: 1.7,
+        }}>
+          A comprehensive range of medicines across specialities
+        </p>
+      </motion.div>
+
+      {/* Row 1 — 4 cards */}
       <div style={{
-        background: '#fff',
-        borderRadius: '28px',
-        padding: '4rem 3.5rem',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(4, 1fr)',
+        gap: '1rem',
+        marginBottom: '1rem',
       }}>
-
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: 'easeOut' }}
-          style={{ textAlign: 'center', marginBottom: '3.5rem' }}
-        >
-          <span style={{
-            display: 'inline-block',
-            border: '1px solid #bbb',
-            borderRadius: '999px',
-            padding: '0.3rem 1.2rem',
-            fontSize: '0.8rem',
-            color: '#888',
-            marginBottom: '1.25rem',
-            letterSpacing: '0.03em',
-          }}>
-            Our Portfolio
-          </span>
-
-          <h2 style={{
-            fontSize: 'clamp(2rem, 3.5vw, 3rem)',
-            fontWeight: 600,
-            color: '#1a2f7a',
-            marginBottom: '0.9rem',
-            fontFamily: "'Outfit', sans-serif",
-            letterSpacing: '-0.01em',
-          }}>
-            Therapeutic Areas
-          </h2>
-
-          <p style={{
-            fontSize: '0.95rem',
-            color: '#999',
-            maxWidth: '420px',
-            margin: '0 auto',
-            lineHeight: 1.7,
-          }}>
-            A comprehensive range of medicines across specialities
-          </p>
-        </motion.div>
-
-        {/* Row 1 — 4 cards */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: '1rem',
-          marginBottom: '1rem',
-        }}>
-          {row1.map((area, i) => (
-            <Card key={area.title} area={area} index={i} isInView={isInView} />
-          ))}
-        </div>
-
-        {/* Row 2 — 4 cards */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: '1rem',
-        }}>
-          {row2.map((area, i) => (
-            <Card key={area.title} area={area} index={i + 4} isInView={isInView} />
-          ))}
-        </div>
-
+        {row1.map((area, i) => (
+          <Card key={area.title} area={area} index={i} isInView={isInView} />
+        ))}
       </div>
+
+      {/* Row 2 — 4 cards */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(4, 1fr)',
+        gap: '1rem',
+      }}>
+        {row2.map((area, i) => (
+          <Card key={area.title} area={area} index={i + 4} isInView={isInView} />
+        ))}
+      </div>
+
     </section>
   )
 }
@@ -132,12 +126,13 @@ function Card({ area, index, isInView }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        background: hovered ? '#1a2f7a' : '#f7f6f3',
-        borderRadius: '16px',
-        padding: '2rem 1.75rem',
+        background: hovered ? '#1a2f7a' : '#ffffff',
+        border: hovered ? '1.5px solid transparent' : '1.5px solid #e2dfd9',
+        borderRadius: '20px',
+        padding: '2.25rem 2rem',
         cursor: 'default',
-        transition: 'background 0.3s ease',
-        minHeight: '175px',
+        transition: 'background 0.3s ease, border-color 0.3s ease',
+        minHeight: '190px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
@@ -146,8 +141,8 @@ function Card({ area, index, isInView }) {
       <h3 style={{
         fontSize: '1.05rem',
         fontWeight: 600,
-        color: hovered ? '#fff' : '#1a1a1a',
-        marginBottom: '0.7rem',
+        color: hovered ? '#ffffff' : '#1a1a1a',
+        marginBottom: '0.75rem',
         fontFamily: "'Outfit', sans-serif",
         transition: 'color 0.3s ease',
       }}>
@@ -156,8 +151,8 @@ function Card({ area, index, isInView }) {
 
       <p style={{
         fontSize: '0.85rem',
-        color: hovered ? 'rgba(255,255,255,0.72)' : '#999',
-        lineHeight: 1.65,
+        color: hovered ? 'rgba(255,255,255,0.68)' : '#aaa',
+        lineHeight: 1.7,
         transition: 'color 0.3s ease',
       }}>
         {area.desc}
