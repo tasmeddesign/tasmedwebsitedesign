@@ -1,46 +1,38 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 
 const AREAS = [
   {
     title: 'Neurology',
-    desc: 'Treating ailments related to anxiety, depression and OCD',
-    icon: '🧠',
+    desc: 'Treating ailments related to anxiety, depression and OCD with targeted neuro formulations.',
   },
   {
     title: 'Gastroenterology',
-    desc: 'Sustained medicines for treatment of renal disorders, hyperacidity and oesophagitis reflux',
-    icon: '🫀',
+    desc: 'Sustained medicines for treatment of renal disorders, hyperacidity and oesophagitis reflux.',
   },
   {
     title: 'Cardiology',
-    desc: 'Medicines to cure hypertension, manage heart rhythms, and blood pressure',
-    icon: '❤️',
+    desc: 'Medicines to cure hypertension, manage heart rhythms, and blood pressure.',
   },
   {
     title: 'Anti Diabetic',
-    desc: 'Medicines to stabilize, and control blood glucose levels among people with diabetes',
-    icon: '💊',
+    desc: 'Medicines to stabilize, and control blood glucose levels among people with diabetes.',
   },
   {
     title: 'Gynaecology',
-    desc: 'Medical care for women during pregnancy, childbirth and postpartum days',
-    icon: '🌸',
+    desc: 'Medical care for women during pregnancy, childbirth and postpartum days.',
   },
   {
     title: 'Urology',
-    desc: 'Formulations exceeding industry benchmarks to cater to growing demand of urology medicines',
-    icon: '🔬',
+    desc: 'Formulations exceeding industry benchmarks to cater to growing demand of urology medicines.',
   },
   {
     title: 'Orthology',
-    desc: 'A dedicated unit for bone care',
-    icon: '🦴',
+    desc: 'A dedicated unit for bone care.',
   },
   {
     title: 'General',
-    desc: 'A dedicated unit for overall health',
-    highlight: true,
+    desc: 'A dedicated unit for overall health.',
   },
 ]
 
@@ -52,38 +44,38 @@ export default function TherapeuticAreas() {
   const row2 = AREAS.slice(4, 8)
 
   return (
-    <section ref={sectionRef} style={{ padding: '0 150px 5rem' }}>
-      {/* Outer rounded card */}
+    <section ref={sectionRef} style={{ padding: '5rem 150px 5rem' }}>
       <div style={{
         background: '#fff',
         borderRadius: '28px',
-        padding: '5rem 4rem',
+        padding: '4rem 3.5rem',
       }}>
 
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: 'easeOut' }}
-          style={{ textAlign: 'center', marginBottom: '4rem' }}
+          style={{ textAlign: 'center', marginBottom: '3.5rem' }}
         >
           <span style={{
             display: 'inline-block',
-            border: '1px solid #aaa',
+            border: '1px solid #bbb',
             borderRadius: '999px',
-            padding: '0.3rem 1.1rem',
+            padding: '0.3rem 1.2rem',
             fontSize: '0.8rem',
-            color: '#666',
-            marginBottom: '1.5rem',
+            color: '#888',
+            marginBottom: '1.25rem',
+            letterSpacing: '0.03em',
           }}>
             Our Portfolio
           </span>
 
           <h2 style={{
-            fontSize: 'clamp(2rem, 4vw, 3.2rem)',
-            fontWeight: 400,
+            fontSize: 'clamp(2rem, 3.5vw, 3rem)',
+            fontWeight: 600,
             color: '#1a2f7a',
-            marginBottom: '1rem',
+            marginBottom: '0.9rem',
             fontFamily: "'Outfit', sans-serif",
             letterSpacing: '-0.01em',
           }}>
@@ -91,14 +83,13 @@ export default function TherapeuticAreas() {
           </h2>
 
           <p style={{
-            fontSize: '1rem',
-            color: '#777',
-            maxWidth: '500px',
+            fontSize: '0.95rem',
+            color: '#999',
+            maxWidth: '420px',
             margin: '0 auto',
             lineHeight: 1.7,
           }}>
-            Spanning critical healthcare segments, our formulations address the most
-            prevalent chronic conditions across diverse patient populations.
+            A comprehensive range of medicines across specialities
           </p>
         </motion.div>
 
@@ -106,19 +97,19 @@ export default function TherapeuticAreas() {
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: '1.25rem',
-          marginBottom: '1.25rem',
+          gap: '1rem',
+          marginBottom: '1rem',
         }}>
           {row1.map((area, i) => (
             <Card key={area.title} area={area} index={i} isInView={isInView} />
           ))}
         </div>
 
-        {/* Row 2 — 4 cards (last one highlighted) */}
+        {/* Row 2 — 4 cards */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: '1.25rem',
+          gap: '1rem',
         }}>
           {row2.map((area, i) => (
             <Card key={area.title} area={area} index={i + 4} isInView={isInView} />
@@ -131,83 +122,46 @@ export default function TherapeuticAreas() {
 }
 
 function Card({ area, index, isInView }) {
-  const highlighted = area.highlight
+  const [hovered, setHovered] = useState(false)
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.55, ease: 'easeOut', delay: 0.1 + index * 0.07 }}
+      transition={{ duration: 0.5, ease: 'easeOut', delay: 0.08 + index * 0.06 }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       style={{
-        background: highlighted ? '#1a2f7a' : '#f7f6f3',
-        borderRadius: '18px',
+        background: hovered ? '#1a2f7a' : '#f7f6f3',
+        borderRadius: '16px',
         padding: '2rem 1.75rem',
+        cursor: 'default',
+        transition: 'background 0.3s ease',
+        minHeight: '175px',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
-        minHeight: '200px',
+        justifyContent: 'flex-start',
       }}
     >
-      <div>
-        {/* Icon placeholder — subtle pill */}
-        {!highlighted && (
-          <div style={{
-            width: '40px',
-            height: '40px',
-            borderRadius: '12px',
-            background: '#ede9e2',
-            marginBottom: '1.5rem',
-          }} />
-        )}
+      <h3 style={{
+        fontSize: '1.05rem',
+        fontWeight: 600,
+        color: hovered ? '#fff' : '#1a1a1a',
+        marginBottom: '0.7rem',
+        fontFamily: "'Outfit', sans-serif",
+        transition: 'color 0.3s ease',
+      }}>
+        {area.title}
+      </h3>
 
-        {highlighted && (
-          <div style={{
-            width: '40px',
-            height: '40px',
-            borderRadius: '12px',
-            background: 'rgba(255,255,255,0.15)',
-            marginBottom: '1.5rem',
-          }} />
-        )}
-
-        <h3 style={{
-          fontSize: '1.15rem',
-          fontWeight: 500,
-          color: highlighted ? '#fff' : '#1a1a1a',
-          marginBottom: '0.75rem',
-          fontFamily: "'Outfit', sans-serif",
-        }}>
-          {area.title}
-        </h3>
-
-        <p style={{
-          fontSize: '0.875rem',
-          color: highlighted ? 'rgba(255,255,255,0.72)' : '#888',
-          lineHeight: 1.65,
-        }}>
-          {area.desc}
-        </p>
-      </div>
-
-      {/* Arrow link */}
-      <div style={{ marginTop: '2rem' }}>
-        <div style={{
-          width: '32px',
-          height: '32px',
-          borderRadius: '50%',
-          border: highlighted ? '1px solid rgba(255,255,255,0.35)' : '1px solid #ddd',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-            stroke={highlighted ? '#fff' : '#999'}
-            strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="7" y1="17" x2="17" y2="7" />
-            <polyline points="7 7 17 7 17 17" />
-          </svg>
-        </div>
-      </div>
+      <p style={{
+        fontSize: '0.85rem',
+        color: hovered ? 'rgba(255,255,255,0.72)' : '#999',
+        lineHeight: 1.65,
+        transition: 'color 0.3s ease',
+      }}>
+        {area.desc}
+      </p>
     </motion.div>
   )
 }
