@@ -128,7 +128,7 @@ function Card({ area, index, isInView }) {
       onMouseLeave={() => setHovered(false)}
       style={{
         background: hovered
-          ? 'linear-gradient(145deg, #1e3a8a 0%, #2f5ec4 55%, #5b8ae8 100%)'
+          ? 'linear-gradient(135deg, #3060c8 0%, #1e3a8a 45%, #152060 100%)'
           : '#ffffff',
         border: hovered ? '1.5px solid transparent' : '1.5px solid #e2dfd9',
         borderRadius: '20px',
