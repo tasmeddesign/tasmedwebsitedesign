@@ -126,12 +126,14 @@ function Card({ area, index, isInView }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        background: hovered ? '#1a2f7a' : '#ffffff',
+        background: hovered
+          ? 'linear-gradient(135deg, #050d1a, #0a1f4e, #1a3a6b, #0d2444, #07163a)'
+          : '#ffffff',
         border: hovered ? '1.5px solid transparent' : '1.5px solid #e2dfd9',
         borderRadius: '20px',
         padding: '2.25rem 2rem',
         cursor: 'default',
-        transition: 'background 0.3s ease, border-color 0.3s ease',
+        transition: 'border-color 0.3s ease',
         minHeight: '190px',
         display: 'flex',
         flexDirection: 'column',
