@@ -113,8 +113,8 @@ export default function AboutSection() {
             </h3>
 
             <p style={{
-              fontSize: '20px',
-              color: '#666',
+              fontSize: '1rem',
+              color: '#777',
               lineHeight: 1.7,
             }}>
               We Apply Research, Technology And Science To Innovate And Develop High Quality

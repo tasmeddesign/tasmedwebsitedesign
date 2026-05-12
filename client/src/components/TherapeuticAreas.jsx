@@ -67,19 +67,19 @@ export default function TherapeuticAreas() {
         </span>
 
         <h2 style={{
-          fontSize: 'clamp(2.2rem, 3.5vw, 3.2rem)',
-          fontWeight: 400,
+          fontSize: '50px',
+          fontWeight: 500,
           color: '#1a2f7a',
           marginBottom: '0.9rem',
           fontFamily: "'Outfit', sans-serif",
-          letterSpacing: '-0.02em',
+          letterSpacing: '-0.01em',
         }}>
           Therapeutic Areas
         </h2>
 
         <p style={{
-          fontSize: '0.95rem',
-          color: '#aaa',
+          fontSize: '1rem',
+          color: '#777',
           maxWidth: '420px',
           margin: '0 auto',
           lineHeight: 1.7,
@@ -92,7 +92,7 @@ export default function TherapeuticAreas() {
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(4, 1fr)',
-        gap: '1rem',
+        gap: '1.25rem',
         marginBottom: '1rem',
       }}>
         {row1.map((area, i) => (
@@ -104,7 +104,7 @@ export default function TherapeuticAreas() {
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(4, 1fr)',
-        gap: '1rem',
+        gap: '1.25rem',
       }}>
         {row2.map((area, i) => (
           <Card key={area.title} area={area} index={i + 4} isInView={isInView} />
