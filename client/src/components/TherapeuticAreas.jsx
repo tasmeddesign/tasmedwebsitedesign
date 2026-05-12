@@ -123,6 +123,7 @@ function Card({ area, index, isInView }) {
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, ease: 'easeOut', delay: 0.08 + index * 0.06 }}
+      whileHover={{ scale: 1.04 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
@@ -133,7 +134,7 @@ function Card({ area, index, isInView }) {
         borderRadius: '20px',
         padding: '2.25rem 2rem',
         cursor: 'default',
-        transition: 'border-color 0.3s ease',
+        transition: 'background 0.45s ease, border-color 0.45s ease',
         minHeight: '190px',
         display: 'flex',
         flexDirection: 'column',
@@ -146,7 +147,7 @@ function Card({ area, index, isInView }) {
         color: hovered ? '#ffffff' : '#1a1a1a',
         marginBottom: '0.75rem',
         fontFamily: "'Outfit', sans-serif",
-        transition: 'color 0.3s ease',
+        transition: 'color 0.45s ease',
       }}>
         {area.title}
       </h3>
@@ -155,7 +156,7 @@ function Card({ area, index, isInView }) {
         fontSize: '0.85rem',
         color: hovered ? 'rgba(255,255,255,0.68)' : '#aaa',
         lineHeight: 1.7,
-        transition: 'color 0.3s ease',
+        transition: 'color 0.45s ease',
       }}>
         {area.desc}
       </p>
