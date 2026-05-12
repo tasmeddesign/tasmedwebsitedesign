@@ -123,12 +123,12 @@ function Card({ area, index, isInView }) {
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, ease: 'easeOut', delay: 0.08 + index * 0.06 }}
-      whileHover={{ scale: 1.04, transition: { duration: 0.15, ease: 'easeOut' } }}
+      whileHover={{ scale: 1.025, transition: { duration: 0.15, ease: 'easeOut' } }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
         background: hovered
-          ? 'linear-gradient(135deg, #1a2f7a 0%, #2d52b8 50%, #1a3a8f 100%)'
+          ? 'linear-gradient(145deg, #1e3a8a 0%, #2f5ec4 55%, #5b8ae8 100%)'
           : '#ffffff',
         border: hovered ? '1.5px solid transparent' : '1.5px solid #e2dfd9',
         borderRadius: '20px',
@@ -142,8 +142,8 @@ function Card({ area, index, isInView }) {
       }}
     >
       <h3 style={{
-        fontSize: '1.05rem',
-        fontWeight: 600,
+        fontSize: '1.2rem',
+        fontWeight: 500,
         color: hovered ? '#ffffff' : '#1a1a1a',
         marginBottom: '0.75rem',
         fontFamily: "'Outfit', sans-serif",
@@ -153,8 +153,9 @@ function Card({ area, index, isInView }) {
       </h3>
 
       <p style={{
-        fontSize: '0.85rem',
-        color: hovered ? 'rgba(255,255,255,0.68)' : '#aaa',
+        fontSize: '0.95rem',
+        fontWeight: 400,
+        color: hovered ? 'rgba(255,255,255,0.72)' : '#aaa',
         lineHeight: 1.7,
         transition: 'color 0.2s ease',
       }}>
