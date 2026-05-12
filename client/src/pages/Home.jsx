@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar'
 import Hero from '../components/Hero'
 import AboutSection from '../components/AboutSection'
 import TherapeuticAreas from '../components/TherapeuticAreas'
+import GlobalPresence from '../components/GlobalPresence'
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false)
@@ -15,6 +16,7 @@ export default function Home() {
       <Hero visible={loaded} />
       <AboutSection />
       <TherapeuticAreas />
+      <GlobalPresence />
     </div>
   )
 }
