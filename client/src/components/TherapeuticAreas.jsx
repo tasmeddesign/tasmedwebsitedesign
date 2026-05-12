@@ -68,7 +68,7 @@ export default function TherapeuticAreas() {
 
         <h2 style={{
           fontSize: 'clamp(2.2rem, 3.5vw, 3.2rem)',
-          fontWeight: 700,
+          fontWeight: 400,
           color: '#1a2f7a',
           marginBottom: '0.9rem',
           fontFamily: "'Outfit', sans-serif",
