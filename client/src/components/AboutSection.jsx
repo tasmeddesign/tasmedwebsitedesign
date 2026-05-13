@@ -41,7 +41,7 @@ export default function AboutSection() {
   return (
     <section
       ref={sectionRef}
-      style={{ background: '#f0eeea', padding: '5rem 150px 5rem' }}
+      style={{ background: '#FCFAF7', padding: '5rem 150px 5rem' }}
     >
       {/* Top centered heading */}
       <motion.div
