@@ -4,19 +4,19 @@ import Globe from 'react-globe.gl'
 import * as THREE from 'three'
 
 const HQ = [
-  { name: 'Chandigarh, India', lat: 30.7333, lng: 76.7794 },
-  { name: 'Ahmedabad, India', lat: 23.0225, lng: 72.5714 },
+  { name: 'Chandigarh, India', lat: 30.7333, lng: 76.7794, country: 'India' },
+  { name: 'Ahmedabad, India', lat: 23.0225, lng: 72.5714, country: 'India' },
 ]
 
 const INTERNATIONAL = [
-  { name: 'Nepal', lat: 27.7172, lng: 85.3240 },
-  { name: 'Cambodia', lat: 11.5564, lng: 104.9282 },
-  { name: 'Kenya', lat: -1.2921, lng: 36.8219 },
-  { name: 'Uganda', lat: 0.3476, lng: 32.5825 },
-  { name: 'Tanzania', lat: -6.7924, lng: 39.2083 },
-  { name: 'Mauritius', lat: -20.1609, lng: 57.4989 },
-  { name: 'Philippines', lat: 14.5995, lng: 120.9842 },
-  { name: 'Singapore', lat: 1.3521, lng: 103.8198 },
+  { name: 'Nepal', lat: 27.7172, lng: 85.3240, country: 'Nepal' },
+  { name: 'Cambodia', lat: 11.5564, lng: 104.9282, country: 'Cambodia' },
+  { name: 'Kenya', lat: -1.2921, lng: 36.8219, country: 'Kenya' },
+  { name: 'Uganda', lat: 0.3476, lng: 32.5825, country: 'Uganda' },
+  { name: 'Tanzania', lat: -6.7924, lng: 39.2083, country: 'United Republic of Tanzania' },
+  { name: 'Mauritius', lat: -20.1609, lng: 57.4989, country: 'Mauritius' },
+  { name: 'Philippines', lat: 14.5995, lng: 120.9842, country: 'Philippines' },
+  { name: 'Singapore', lat: 1.3521, lng: 103.8198, country: 'Singapore' },
 ]
 
 const INDIA_STATES = [
@@ -56,10 +56,11 @@ export default function GlobalPresence() {
   const isInView = useInView(sectionRef, { once: true, margin: '-80px' })
   const [countries, setCountries] = useState([])
   const [active, setActive] = useState(null)
+  const [highlightedCountry, setHighlightedCountry] = useState(null)
 
   const globeMaterial = useMemo(() => new THREE.MeshPhongMaterial({
-    color: new THREE.Color('#f0eeea'),
-    shininess: 6,
+    color: new THREE.Color('#eceae6'),
+    shininess: 4,
   }), [])
 
   useEffect(() => {
@@ -74,19 +75,31 @@ export default function GlobalPresence() {
     ctrl.autoRotate = true
     ctrl.autoRotateSpeed = 0.5
     ctrl.enableZoom = false
-    globeRef.current.pointOfView({ lat: 20, lng: 80, altitude: 2.2 }, 0)
+    globeRef.current.pointOfView({ lat: 20, lng: 80, altitude: 2 }, 0)
   }, [])
 
-  const focusOn = useCallback((lat, lng, name) => {
+  const focusOn = useCallback((lat, lng, name, country) => {
     setActive(name)
+    setHighlightedCountry(country || null)
     if (!globeRef.current) return
     const ctrl = globeRef.current.controls()
     ctrl.autoRotate = false
-    globeRef.current.pointOfView({ lat, lng, altitude: 1.9 }, 1000)
+    globeRef.current.pointOfView({ lat, lng, altitude: 1.7 }, 1000)
     setTimeout(() => {
       if (globeRef.current) globeRef.current.controls().autoRotate = true
     }, 5000)
   }, [])
+
+  const getPolygonColor = useCallback((feature) => {
+    if (!highlightedCountry) return 'rgba(235,233,229,0.95)'
+    if (feature.properties.ADMIN === highlightedCountry) return 'rgba(26,47,122,0.18)'
+    return 'rgba(235,233,229,0.95)'
+  }, [highlightedCountry])
+
+  const getPolygonStroke = useCallback((feature) => {
+    if (highlightedCountry && feature.properties.ADMIN === highlightedCountry) return '#1a2f7a'
+    return '#b0adb8'
+  }, [highlightedCountry])
 
   return (
     <section ref={sectionRef} style={{ padding: '5rem 150px 5rem' }}>
@@ -135,21 +148,21 @@ export default function GlobalPresence() {
       </motion.div>
 
       {/* 2-col layout */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
-        {/* Left panel */}
+        {/* Left sidebar */}
         <motion.div
           initial={{ opacity: 0, x: -24 }}
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
-          style={{ flex: '0 0 300px' }}
+          style={{ flex: '0 0 280px' }}
         >
           <p style={{
             fontSize: '0.7rem',
             color: '#aaa',
-            letterSpacing: '0.1em',
+            letterSpacing: '0.08em',
             textTransform: 'uppercase',
-            marginBottom: '0.5rem',
+            marginBottom: '0.4rem',
           }}>
             Our Headquarters
           </p>
@@ -159,56 +172,65 @@ export default function GlobalPresence() {
               key={loc.name}
               loc={loc}
               active={active === loc.name}
-              isHQ
-              onClick={() => focusOn(loc.lat, loc.lng, loc.name)}
+              onClick={() => focusOn(loc.lat, loc.lng, loc.name, loc.country)}
             />
           ))}
 
           <p style={{
             fontSize: '0.7rem',
             color: '#aaa',
-            letterSpacing: '0.1em',
+            letterSpacing: '0.08em',
             textTransform: 'uppercase',
-            marginBottom: '0.5rem',
-            marginTop: '2.5rem',
+            marginBottom: '0.4rem',
+            marginTop: '2rem',
           }}>
             International Presence
           </p>
 
-          {INTERNATIONAL.map(loc => (
-            <LocationRow
-              key={loc.name}
-              loc={loc}
-              active={active === loc.name}
-              onClick={() => focusOn(loc.lat, loc.lng, loc.name)}
-            />
-          ))}
+          <div style={{
+            maxHeight: '280px',
+            overflowY: 'auto',
+            scrollbarWidth: 'thin',
+            scrollbarColor: '#ccc transparent',
+          }}>
+            {INTERNATIONAL.map(loc => (
+              <LocationRow
+                key={loc.name}
+                loc={loc}
+                active={active === loc.name}
+                onClick={() => focusOn(loc.lat, loc.lng, loc.name, loc.country)}
+              />
+            ))}
+          </div>
         </motion.div>
 
-        {/* Globe */}
+        {/* Globe — pushed right */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 1, ease: 'easeOut', delay: 0.4 }}
-          style={{ flex: 1, display: 'flex', justifyContent: 'center' }}
+          style={{ display: 'flex', justifyContent: 'flex-end', flex: 1 }}
         >
           <Globe
             ref={globeRef}
-            width={680}
-            height={680}
+            width={780}
+            height={780}
             backgroundColor="rgba(0,0,0,0)"
             globeMaterial={globeMaterial}
-            atmosphereColor="rgba(26,47,122,0.25)"
-            atmosphereAltitude={0.14}
+            atmosphereColor="rgba(26,47,122,0.2)"
+            atmosphereAltitude={0.12}
             polygonsData={countries}
-            polygonCapColor={() => 'rgba(240,238,234,0.95)'}
-            polygonSideColor={() => 'rgba(26,47,122,0.06)'}
-            polygonStrokeColor={() => '#1a2f7a'}
-            polygonAltitude={0.003}
+            polygonCapColor={getPolygonColor}
+            polygonSideColor={() => 'rgba(26,47,122,0.04)'}
+            polygonStrokeColor={getPolygonStroke}
+            polygonAltitude={d =>
+              highlightedCountry && d.properties.ADMIN === highlightedCountry ? 0.012 : 0.003
+            }
             pointsData={ALL_POINTS}
             pointColor={d => d.type === 'hq' ? '#1a2f7a' : '#2d52b8'}
-            pointAltitude={0.02}
+            pointAltitude={0}
             pointRadius={d => d.type === 'hq' ? 0.55 : 0.38}
+            pointResolution={12}
             pointLabel={d =>
               `<div style="background:#1a2f7a;color:#fff;padding:5px 12px;border-radius:8px;font-family:Outfit,sans-serif;font-size:12px;white-space:nowrap">${d.name}</div>`
             }
@@ -221,7 +243,7 @@ export default function GlobalPresence() {
   )
 }
 
-function LocationRow({ loc, active, isHQ, onClick }) {
+function LocationRow({ loc, active, onClick }) {
   const [hovered, setHovered] = useState(false)
   return (
     <button
@@ -233,8 +255,8 @@ function LocationRow({ loc, active, isHQ, onClick }) {
         width: '100%',
         background: 'none',
         border: 'none',
-        borderBottom: '1px solid #e8e5e0',
-        padding: '0.85rem 0',
+        borderBottom: '1px solid #e5e2dc',
+        padding: '0.8rem 0',
         textAlign: 'left',
         cursor: 'pointer',
       }}
@@ -243,7 +265,7 @@ function LocationRow({ loc, active, isHQ, onClick }) {
         fontSize: '1.3rem',
         fontWeight: 400,
         fontFamily: "'Outfit', sans-serif",
-        color: active || hovered ? '#1a2f7a' : '#1a1a1a',
+        color: active ? '#1a2f7a' : hovered ? '#1a2f7a' : '#1a1a1a',
         transition: 'color 0.2s ease',
       }}>
         {loc.name}
