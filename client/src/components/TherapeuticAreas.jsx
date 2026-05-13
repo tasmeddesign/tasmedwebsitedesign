@@ -48,7 +48,7 @@ export default function TherapeuticAreas() {
 
       {/* Rounded panel wrapping everything */}
       <div style={{
-        background: '#f7f6f3',
+        background: '#FCFAF7',
         borderRadius: '24px',
         padding: '3.5rem 3rem',
       }}>
@@ -137,7 +137,7 @@ function Card({ area, index, isInView }) {
       style={{
         background: hovered
           ? 'linear-gradient(135deg, #18458F 1%, #315F9C 24%, #2F4784 70%, #091C5C 100%)'
-          : '#ffffff',
+          : '#EFEFEF',
         border: hovered ? '1.5px solid transparent' : '1.5px solid #e2dfd9',
         borderRadius: '20px',
         padding: '2.25rem 2rem',
