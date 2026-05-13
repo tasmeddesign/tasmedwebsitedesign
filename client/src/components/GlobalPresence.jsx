@@ -157,7 +157,7 @@ export default function GlobalPresence() {
       </motion.div>
 
       {/* 2-col layout */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8rem' }}>
 
         {/* Left sidebar */}
         <motion.div
@@ -218,7 +218,7 @@ export default function GlobalPresence() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 1, ease: 'easeOut', delay: 0.4 }}
-          style={{ flexShrink: 0, marginLeft: '-40px' }}
+          style={{ flexShrink: 0 }}
         >
           <Globe
             ref={globeRef}
