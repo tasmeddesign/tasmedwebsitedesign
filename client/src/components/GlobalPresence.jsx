@@ -111,7 +111,7 @@ export default function GlobalPresence() {
   }, [highlightedCountry])
 
   return (
-    <section ref={sectionRef} onClick={resetHighlight} style={{ padding: '5rem 150px' }}>
+    <section ref={sectionRef} onClick={resetHighlight} style={{ padding: '5rem 120px 5rem 150px' }}>
 
       {/* Header */}
       <motion.div
