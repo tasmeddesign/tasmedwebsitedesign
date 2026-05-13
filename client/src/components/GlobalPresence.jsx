@@ -218,12 +218,12 @@ export default function GlobalPresence() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 1, ease: 'easeOut', delay: 0.4 }}
-          style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}
+          style={{ flexShrink: 0 }}
         >
           <Globe
             ref={globeRef}
-            width={660}
-            height={660}
+            width={600}
+            height={600}
             backgroundColor="rgba(0,0,0,0)"
             globeMaterial={globeMaterial}
             atmosphereColor="rgba(26,47,122,0.2)"
