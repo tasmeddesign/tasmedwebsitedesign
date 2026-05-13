@@ -217,7 +217,7 @@ export default function GlobalPresence() {
           </p>
 
           <div style={{
-            maxHeight: '280px',
+            maxHeight: '228px',
             overflowY: 'auto',
             scrollbarWidth: 'thin',
             scrollbarColor: '#ccc transparent',
