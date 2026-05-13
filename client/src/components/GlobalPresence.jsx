@@ -261,7 +261,7 @@ export default function GlobalPresence() {
             pointRadius={d => d.type === 'hq' ? 0.65 : 0.45}
             pointResolution={16}
             pointLabel={d =>
-              `<div style="background:#1a2f7a;color:#fff;padding:5px 12px;border-radius:8px;font-family:Outfit,sans-serif;font-size:12px;white-space:nowrap;pointer-events:none">${d.name}</div>`
+              `<div style="background:#fff;color:#1a2f7a;padding:6px 14px;border-radius:8px;font-family:Outfit,sans-serif;font-size:13px;font-weight:500;white-space:nowrap;pointer-events:none;box-shadow:0 2px 12px rgba(0,0,0,0.15);border:1px solid #e0ddd8;letter-spacing:0.01em">${d.name}</div>`
             }
             onGlobeClick={resetHighlight}
             ringsData={ringTarget}
