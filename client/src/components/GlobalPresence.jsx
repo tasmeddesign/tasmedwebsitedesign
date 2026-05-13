@@ -164,7 +164,7 @@ export default function GlobalPresence() {
           initial={{ opacity: 0, x: -24 }}
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
-          style={{ flex: '0 0 440px' }}
+          style={{ flex: '0 0 454px' }}
         >
           <p style={{
             fontSize: '0.7rem',
