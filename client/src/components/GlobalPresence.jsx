@@ -155,7 +155,7 @@ export default function GlobalPresence() {
           initial={{ opacity: 0, x: -24 }}
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
-          style={{ flex: '0 0 280px' }}
+          style={{ flex: '0 0 380px' }}
         >
           <p style={{
             fontSize: '0.7rem',
@@ -227,10 +227,10 @@ export default function GlobalPresence() {
               highlightedCountry && d.properties.ADMIN === highlightedCountry ? 0.012 : 0.003
             }
             pointsData={ALL_POINTS}
-            pointColor={d => d.type === 'hq' ? '#1a2f7a' : '#2d52b8'}
+            pointColor={d => d.type === 'hq' ? '#0d1f5c' : '#2d52b8'}
             pointAltitude={0}
-            pointRadius={d => d.type === 'hq' ? 0.55 : 0.38}
-            pointResolution={12}
+            pointRadius={d => d.type === 'hq' ? 0.7 : 0.5}
+            pointResolution={16}
             pointLabel={d =>
               `<div style="background:#1a2f7a;color:#fff;padding:5px 12px;border-radius:8px;font-family:Outfit,sans-serif;font-size:12px;white-space:nowrap">${d.name}</div>`
             }
