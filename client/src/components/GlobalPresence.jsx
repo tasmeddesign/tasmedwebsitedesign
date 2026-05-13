@@ -166,6 +166,26 @@ export default function GlobalPresence() {
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
           style={{ flex: '0 0 454px' }}
         >
+          <div style={{ marginBottom: '2rem' }}>
+            <h3 style={{
+              fontSize: '1.6rem',
+              fontWeight: 500,
+              color: '#1a2f7a',
+              fontFamily: "'Outfit', sans-serif",
+              marginBottom: '0.4rem',
+              lineHeight: 1.25,
+            }}>
+              Presence In Over 20 States In India
+            </h3>
+            <p style={{
+              fontSize: '0.9rem',
+              color: '#999',
+              lineHeight: 1.6,
+            }}>
+              We Are Honoured To Serve Across 20+ States.
+            </p>
+          </div>
+
           <p style={{
             fontSize: '0.7rem',
             color: '#aaa',
