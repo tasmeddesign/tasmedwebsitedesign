@@ -111,7 +111,7 @@ export default function GlobalPresence() {
   }, [highlightedCountry])
 
   return (
-    <section ref={sectionRef} onClick={resetHighlight} style={{ padding: '5rem 150px 5rem' }}>
+    <section ref={sectionRef} onClick={resetHighlight} style={{ padding: '5rem 60px 5rem 220px' }}>
 
       {/* Header */}
       <motion.div
@@ -245,6 +245,7 @@ export default function GlobalPresence() {
             pointLabel={d =>
               `<div style="background:#1a2f7a;color:#fff;padding:5px 12px;border-radius:8px;font-family:Outfit,sans-serif;font-size:12px;white-space:nowrap;pointer-events:none">${d.name}</div>`
             }
+            onGlobeClick={resetHighlight}
             ringsData={ringTarget}
             ringColor={() => '#1a2f7a'}
             ringMaxRadius={4}
