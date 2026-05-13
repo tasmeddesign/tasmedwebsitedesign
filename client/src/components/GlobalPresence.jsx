@@ -227,7 +227,7 @@ export default function GlobalPresence() {
               highlightedCountry && d.properties.ADMIN === highlightedCountry ? 0.012 : 0.003
             }
             pointsData={ALL_POINTS}
-            pointColor={d => d.type === 'hq' ? '#0d1f5c' : '#2d52b8'}
+            pointColor={() => '#2d52b8'}
             pointAltitude={0}
             pointRadius={d => d.type === 'hq' ? 0.7 : 0.5}
             pointResolution={16}
