@@ -111,7 +111,7 @@ export default function GlobalPresence() {
   }, [highlightedCountry])
 
   return (
-    <section ref={sectionRef} onClick={resetHighlight} style={{ padding: '5rem 60px 5rem 220px' }}>
+    <section ref={sectionRef} onClick={resetHighlight} style={{ padding: '5rem 150px 5rem 150px' }}>
 
       {/* Header */}
       <motion.div
@@ -157,15 +157,14 @@ export default function GlobalPresence() {
       </motion.div>
 
       {/* 2-col layout */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '2rem' }}>
 
         {/* Left sidebar */}
         <motion.div
           initial={{ opacity: 0, x: -24 }}
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
-          onClick={e => e.stopPropagation()}
-          style={{ flex: '0 0 460px' }}
+          style={{ flex: '0 0 380px' }}
         >
           <p style={{
             fontSize: '0.7rem',
@@ -214,13 +213,12 @@ export default function GlobalPresence() {
           </div>
         </motion.div>
 
-        {/* Globe — pushed right */}
+        {/* Globe */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 1, ease: 'easeOut', delay: 0.4 }}
-          onClick={e => e.stopPropagation()}
-          style={{ display: 'flex', justifyContent: 'flex-end', flex: 1 }}
+          style={{ flexShrink: 0 }}
         >
           <Globe
             ref={globeRef}
@@ -264,7 +262,7 @@ function LocationRow({ loc, active, onClick }) {
   const [hovered, setHovered] = useState(false)
   return (
     <button
-      onClick={onClick}
+      onClick={e => { e.stopPropagation(); onClick() }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
