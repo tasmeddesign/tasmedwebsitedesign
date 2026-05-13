@@ -9,14 +9,14 @@ const HQ = [
 ]
 
 const INTERNATIONAL = [
-  { name: 'Nepal', lat: 27.7172, lng: 85.3240, country: 'Nepal' },
   { name: 'Cambodia', lat: 11.5564, lng: 104.9282, country: 'Cambodia' },
   { name: 'Kenya', lat: -1.2921, lng: 36.8219, country: 'Kenya' },
-  { name: 'Uganda', lat: 0.3476, lng: 32.5825, country: 'Uganda' },
-  { name: 'Tanzania', lat: -6.7924, lng: 39.2083, country: 'United Republic of Tanzania' },
   { name: 'Mauritius', lat: -20.1609, lng: 57.4989, country: 'Mauritius' },
+  { name: 'Nepal', lat: 27.7172, lng: 85.3240, country: 'Nepal' },
   { name: 'Philippines', lat: 14.5995, lng: 120.9842, country: 'Philippines' },
   { name: 'Singapore', lat: 1.3521, lng: 103.8198, country: 'Singapore' },
+  { name: 'Tanzania', lat: -6.7924, lng: 39.2083, country: 'United Republic of Tanzania' },
+  { name: 'Uganda', lat: 0.3476, lng: 32.5825, country: 'Uganda' },
 ]
 
 const INDIA_STATES = [
