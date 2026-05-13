@@ -157,7 +157,7 @@ export default function GlobalPresence() {
       </motion.div>
 
       {/* 2-col layout */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '1rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '3rem', marginLeft: 'auto', width: 'fit-content' }}>
 
         {/* Left sidebar */}
         <motion.div
