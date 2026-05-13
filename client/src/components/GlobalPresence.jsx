@@ -57,6 +57,7 @@ export default function GlobalPresence() {
   const [countries, setCountries] = useState([])
   const [active, setActive] = useState(null)
   const [highlightedCountry, setHighlightedCountry] = useState(null)
+  const [ringTarget, setRingTarget] = useState([])
 
   const globeMaterial = useMemo(() => new THREE.MeshPhongMaterial({
     color: new THREE.Color('#eceae6'),
@@ -81,6 +82,7 @@ export default function GlobalPresence() {
   const focusOn = useCallback((lat, lng, name, country) => {
     setActive(name)
     setHighlightedCountry(country || null)
+    setRingTarget([{ lat, lng }])
     if (!globeRef.current) return
     const ctrl = globeRef.current.controls()
     ctrl.autoRotate = false
@@ -93,6 +95,7 @@ export default function GlobalPresence() {
   const resetHighlight = useCallback(() => {
     setActive(null)
     setHighlightedCountry(null)
+    setRingTarget([])
     if (globeRef.current) globeRef.current.controls().autoRotate = true
   }, [])
 
@@ -242,6 +245,11 @@ export default function GlobalPresence() {
             pointLabel={d =>
               `<div style="background:#1a2f7a;color:#fff;padding:5px 12px;border-radius:8px;font-family:Outfit,sans-serif;font-size:12px;white-space:nowrap;pointer-events:none">${d.name}</div>`
             }
+            ringsData={ringTarget}
+            ringColor={() => '#1a2f7a'}
+            ringMaxRadius={4}
+            ringPropagationSpeed={2.5}
+            ringRepeatPeriod={800}
             onGlobeReady={handleGlobeReady}
           />
         </motion.div>
