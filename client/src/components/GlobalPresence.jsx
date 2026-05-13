@@ -242,8 +242,8 @@ export default function GlobalPresence() {
         >
           <Globe
             ref={globeRef}
-            width={600}
-            height={600}
+            width={700}
+            height={700}
             backgroundColor="rgba(0,0,0,0)"
             globeMaterial={globeMaterial}
             atmosphereColor="rgba(26,47,122,0.2)"
