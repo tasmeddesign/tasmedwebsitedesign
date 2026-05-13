@@ -111,7 +111,7 @@ export default function GlobalPresence() {
   }, [highlightedCountry])
 
   return (
-    <section ref={sectionRef} onClick={resetHighlight} style={{ padding: '5rem 120px 5rem 150px' }}>
+    <section ref={sectionRef} onClick={resetHighlight} style={{ padding: '5rem 100px 5rem 150px' }}>
 
       {/* Header */}
       <motion.div
@@ -218,7 +218,7 @@ export default function GlobalPresence() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 1, ease: 'easeOut', delay: 0.4 }}
-          style={{ flexShrink: 0 }}
+          style={{ flexShrink: 0, marginLeft: '-40px' }}
         >
           <Globe
             ref={globeRef}
