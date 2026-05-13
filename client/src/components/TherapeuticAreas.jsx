@@ -46,6 +46,13 @@ export default function TherapeuticAreas() {
   return (
     <section ref={sectionRef} style={{ padding: '5rem 150px 5rem' }}>
 
+      {/* Rounded panel wrapping everything */}
+      <div style={{
+        background: '#f7f6f3',
+        borderRadius: '24px',
+        padding: '3.5rem 3rem',
+      }}>
+
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 24 }}
@@ -111,6 +118,7 @@ export default function TherapeuticAreas() {
         ))}
       </div>
 
+      </div>{/* end panel */}
     </section>
   )
 }
