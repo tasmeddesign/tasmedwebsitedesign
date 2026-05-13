@@ -253,11 +253,11 @@ export default function GlobalPresence() {
             polygonSideColor={() => 'rgba(26,47,122,0.04)'}
             polygonStrokeColor={getPolygonStroke}
             polygonAltitude={d =>
-              highlightedCountry && d.properties.ADMIN === highlightedCountry ? 0.012 : 0.003
+              highlightedCountry && d.properties.ADMIN === highlightedCountry ? 0.01 : 0.003
             }
             pointsData={ALL_POINTS}
             pointColor={() => '#2d52b8'}
-            pointAltitude={0.01}
+            pointAltitude={0.02}
             pointRadius={d => d.type === 'hq' ? 0.65 : 0.45}
             pointResolution={16}
             pointLabel={d =>
