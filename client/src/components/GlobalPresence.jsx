@@ -111,7 +111,7 @@ export default function GlobalPresence() {
   }, [highlightedCountry])
 
   return (
-    <section ref={sectionRef} onClick={resetHighlight} style={{ padding: '5rem 150px 5rem 150px' }}>
+    <section ref={sectionRef} onClick={resetHighlight} style={{ padding: '5rem 80px' }}>
 
       {/* Header */}
       <motion.div
@@ -147,7 +147,7 @@ export default function GlobalPresence() {
         <p style={{
           fontSize: '1rem',
           color: '#777',
-          maxWidth: '520px',
+          maxWidth: '600px',
           margin: '0 auto',
           lineHeight: 1.7,
         }}>
@@ -157,14 +157,14 @@ export default function GlobalPresence() {
       </motion.div>
 
       {/* 2-col layout */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '3rem', marginLeft: 'auto', width: 'fit-content' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0' }}>
 
         {/* Left sidebar */}
         <motion.div
           initial={{ opacity: 0, x: -24 }}
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
-          style={{ flex: '0 0 300px' }}
+          style={{ flex: '0 0 340px', paddingRight: '1rem' }}
         >
           <p style={{
             fontSize: '0.7rem',
@@ -222,8 +222,8 @@ export default function GlobalPresence() {
         >
           <Globe
             ref={globeRef}
-            width={720}
-            height={720}
+            width={620}
+            height={620}
             backgroundColor="rgba(0,0,0,0)"
             globeMaterial={globeMaterial}
             atmosphereColor="rgba(26,47,122,0.2)"
