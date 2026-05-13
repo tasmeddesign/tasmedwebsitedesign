@@ -218,7 +218,7 @@ export default function GlobalPresence() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 1, ease: 'easeOut', delay: 0.4 }}
-          style={{ flexShrink: 0 }}
+          style={{ flexShrink: 0, marginLeft: '-48px' }}
         >
           <Globe
             ref={globeRef}
