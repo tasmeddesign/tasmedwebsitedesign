@@ -50,7 +50,7 @@ export default function TherapeuticAreas() {
       <div style={{
         background: '#FCFAF7',
         borderRadius: '24px',
-        padding: '3.5rem 3rem',
+        padding: '3.5rem 5rem',
       }}>
 
       {/* Header */}
@@ -99,7 +99,7 @@ export default function TherapeuticAreas() {
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(4, 1fr)',
-        gap: '1.25rem',
+        gap: '1.75rem',
         marginBottom: '1rem',
       }}>
         {row1.map((area, i) => (
@@ -111,7 +111,7 @@ export default function TherapeuticAreas() {
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(4, 1fr)',
-        gap: '1.25rem',
+        gap: '1.75rem',
       }}>
         {row2.map((area, i) => (
           <Card key={area.title} area={area} index={i + 4} isInView={isInView} />
