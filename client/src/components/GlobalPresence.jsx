@@ -130,7 +130,7 @@ export default function GlobalPresence() {
           marginBottom: '1.25rem',
           letterSpacing: '0.03em',
         }}>
-          Our Footprint
+          Where We Are
         </span>
 
         <h2 style={{
@@ -141,7 +141,7 @@ export default function GlobalPresence() {
           fontFamily: "'Outfit', sans-serif",
           letterSpacing: '-0.01em',
         }}>
-          Global Expertise
+          Our Presence
         </h2>
 
         <p style={{
