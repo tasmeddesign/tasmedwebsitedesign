@@ -90,6 +90,12 @@ export default function GlobalPresence() {
     }, 5000)
   }, [])
 
+  const resetHighlight = useCallback(() => {
+    setActive(null)
+    setHighlightedCountry(null)
+    if (globeRef.current) globeRef.current.controls().autoRotate = true
+  }, [])
+
   const getPolygonColor = useCallback((feature) => {
     if (!highlightedCountry) return 'rgba(235,233,229,0.95)'
     if (feature.properties.ADMIN === highlightedCountry) return 'rgba(26,47,122,0.18)'
@@ -102,7 +108,7 @@ export default function GlobalPresence() {
   }, [highlightedCountry])
 
   return (
-    <section ref={sectionRef} style={{ padding: '5rem 150px 5rem' }}>
+    <section ref={sectionRef} onClick={resetHighlight} style={{ padding: '5rem 150px 5rem' }}>
 
       {/* Header */}
       <motion.div
@@ -155,7 +161,8 @@ export default function GlobalPresence() {
           initial={{ opacity: 0, x: -24 }}
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
-          style={{ flex: '0 0 380px' }}
+          onClick={e => e.stopPropagation()}
+          style={{ flex: '0 0 460px' }}
         >
           <p style={{
             fontSize: '0.7rem',
@@ -209,6 +216,7 @@ export default function GlobalPresence() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 1, ease: 'easeOut', delay: 0.4 }}
+          onClick={e => e.stopPropagation()}
           style={{ display: 'flex', justifyContent: 'flex-end', flex: 1 }}
         >
           <Globe
@@ -228,11 +236,11 @@ export default function GlobalPresence() {
             }
             pointsData={ALL_POINTS}
             pointColor={() => '#2d52b8'}
-            pointAltitude={0}
-            pointRadius={d => d.type === 'hq' ? 0.7 : 0.5}
+            pointAltitude={0.01}
+            pointRadius={d => d.type === 'hq' ? 0.65 : 0.45}
             pointResolution={16}
             pointLabel={d =>
-              `<div style="background:#1a2f7a;color:#fff;padding:5px 12px;border-radius:8px;font-family:Outfit,sans-serif;font-size:12px;white-space:nowrap">${d.name}</div>`
+              `<div style="background:#1a2f7a;color:#fff;padding:5px 12px;border-radius:8px;font-family:Outfit,sans-serif;font-size:12px;white-space:nowrap;pointer-events:none">${d.name}</div>`
             }
             onGlobeReady={handleGlobeReady}
           />
