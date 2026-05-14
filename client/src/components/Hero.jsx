@@ -104,7 +104,7 @@ export default function Hero({ visible }) {
               marginBottom: '2rem',
             }}
           >
-            For over three decades, our journey has been about the smiles, the recovery, and the generations we serve.
+            For over three decades, our journey has been about<br />the smiles, the recovery, and the generations we serve.
           </motion.p>
 
           {/* IQVIA ranking badge */}
