@@ -91,27 +91,11 @@ export default function Hero({ visible }) {
             <span style={{ display: 'block' }}>Healthier Life.</span>
           </motion.h1>
 
-          {/* Subtext */}
-          <motion.p
+          {/* IQVIA ranking badge */}
+          <motion.div
             initial={fadeUp(0.4).initial}
             animate={visible ? fadeUp(0.4).animate : fadeUp(0.4).initial}
             transition={fadeUp(0.4).transition}
-            style={{
-              color: 'rgba(255,255,255,0.78)',
-              fontSize: '20px',
-              lineHeight: 1.6,
-              maxWidth: '580px',
-              marginBottom: '2rem',
-            }}
-          >
-            For over three decades, our journey has been about<br />the smiles, the recovery, and the generations we serve.
-          </motion.p>
-
-          {/* IQVIA ranking badge */}
-          <motion.div
-            initial={fadeUp(0.5).initial}
-            animate={visible ? fadeUp(0.5).animate : fadeUp(0.5).initial}
-            transition={fadeUp(0.5).transition}
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -120,7 +104,7 @@ export default function Hero({ visible }) {
               border: '1px solid rgba(255,255,255,0.12)',
               borderRadius: '12px',
               padding: '0.7rem 1.2rem',
-              marginBottom: '2rem',
+              marginBottom: '1.5rem',
               backdropFilter: 'blur(10px)',
               width: 'fit-content',
             }}
@@ -145,6 +129,22 @@ export default function Hero({ visible }) {
               {' '}Pharmaceutical Companies by IQVIA
             </span>
           </motion.div>
+
+          {/* Subtext */}
+          <motion.p
+            initial={fadeUp(0.5).initial}
+            animate={visible ? fadeUp(0.5).animate : fadeUp(0.5).initial}
+            transition={fadeUp(0.5).transition}
+            style={{
+              color: 'rgba(255,255,255,0.78)',
+              fontSize: '20px',
+              lineHeight: 1.6,
+              maxWidth: '580px',
+              marginBottom: '2rem',
+            }}
+          >
+            For over three decades, our journey has been about<br />the smiles, the recovery, and the generations we serve.
+          </motion.p>
 
           {/* CTA */}
           <motion.div
