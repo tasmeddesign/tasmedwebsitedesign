@@ -5,6 +5,7 @@ import Hero from '../components/Hero'
 import AboutSection from '../components/AboutSection'
 import TherapeuticAreas from '../components/TherapeuticAreas'
 import GlobalPresence from '../components/GlobalPresence'
+import LifeAtTasmed from '../components/LifeAtTasmed'
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false)
@@ -17,6 +18,7 @@ export default function Home() {
       <AboutSection />
       <TherapeuticAreas />
       <GlobalPresence />
+      <LifeAtTasmed />
     </div>
   )
 }
