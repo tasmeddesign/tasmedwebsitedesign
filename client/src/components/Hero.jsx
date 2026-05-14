@@ -100,7 +100,7 @@ export default function Hero({ visible }) {
               color: 'rgba(255,255,255,0.78)',
               fontSize: '20px',
               lineHeight: 1.6,
-              maxWidth: '460px',
+              maxWidth: '580px',
               marginBottom: '2rem',
             }}
           >
