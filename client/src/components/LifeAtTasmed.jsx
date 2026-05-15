@@ -1,5 +1,12 @@
-import { useRef, useState } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { useRef, useState, useEffect } from 'react'
+import { motion, useInView, AnimatePresence } from 'framer-motion'
+
+const OFFICE_IMAGES = [
+  { src: '/office-env-1.jpeg', alt: 'Tasmed office environment' },
+  { src: '/office-env-2.jpeg', alt: 'Tasmed team gathering' },
+  { src: '/office-env-3.png', alt: 'Tasmed workspace' },
+]
+const CAROUSEL_INTERVAL = 3500
 
 const VALUES = [
   {
@@ -139,7 +146,7 @@ export default function LifeAtTasmed() {
       {/* Two columns: Values + Testimonials */}
       <div style={{ display: 'flex', gap: '4rem', alignItems: 'flex-start', marginBottom: '4rem' }}>
 
-        {/* Left: office photo collage */}
+        {/* Left: office photo carousel */}
         <motion.div
           initial={{ opacity: 0, x: -24 }}
           animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -155,32 +162,7 @@ export default function LifeAtTasmed() {
           }}>
             Inside Tasmed
           </p>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr 1fr', gap: '0.75rem', height: '420px' }}>
-            {/* Large image left, spans 2 rows */}
-            <div style={{ gridRow: '1 / 3', borderRadius: '16px', overflow: 'hidden' }}>
-              <img
-                src="/Office%20enviroment%201.jpeg"
-                alt="Tasmed office"
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-              />
-            </div>
-            {/* Top right */}
-            <div style={{ borderRadius: '16px', overflow: 'hidden' }}>
-              <img
-                src="/Office%20enviroment%202.jpeg"
-                alt="Tasmed team"
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-              />
-            </div>
-            {/* Bottom right */}
-            <div style={{ borderRadius: '16px', overflow: 'hidden' }}>
-              <img
-                src="/Office%20enviroment%203.png"
-                alt="Tasmed workspace"
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-              />
-            </div>
-          </div>
+          <OfficeCarousel />
         </motion.div>
 
         {/* Right: stacked testimonials */}
@@ -269,37 +251,65 @@ export default function LifeAtTasmed() {
   )
 }
 
-function ValueCard({ value, index, isInView }) {
+function OfficeCarousel() {
+  const [current, setCurrent] = useState(0)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent(prev => (prev + 1) % OFFICE_IMAGES.length)
+    }, CAROUSEL_INTERVAL)
+    return () => clearInterval(timer)
+  }, [])
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, ease: 'easeOut', delay: 0.3 + index * 0.07 }}
-      style={{
-        background: '#ffffff',
-        border: '1.5px solid #e2dfd9',
-        borderLeft: '3px solid #1a2f7a',
-        borderRadius: '16px',
-        padding: '1.5rem',
-      }}
-    >
-      <h4 style={{
-        fontSize: '1rem',
-        fontWeight: 500,
-        color: '#1a2f7a',
-        fontFamily: "'Outfit', sans-serif",
-        marginBottom: '0.5rem',
+    <div style={{ position: 'relative' }}>
+      <div style={{
+        borderRadius: '20px',
+        overflow: 'hidden',
+        height: '420px',
+        background: '#111',
+        position: 'relative',
       }}>
-        {value.title}
-      </h4>
-      <p style={{
-        fontSize: '0.875rem',
-        color: '#888',
-        lineHeight: 1.65,
-      }}>
-        {value.desc}
-      </p>
-    </motion.div>
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={current}
+            src={OFFICE_IMAGES[current].src}
+            alt={OFFICE_IMAGES[current].alt}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, ease: 'easeInOut' }}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              display: 'block',
+            }}
+          />
+        </AnimatePresence>
+      </div>
+
+      {/* Dot indicators */}
+      <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', marginTop: '1rem' }}>
+        {OFFICE_IMAGES.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
+          >
+            <div style={{
+              height: '4px',
+              width: i === current ? '36px' : '10px',
+              borderRadius: '999px',
+              background: i === current ? '#1a2f7a' : '#ccc',
+              transition: 'width 0.3s ease, background 0.3s ease',
+            }} />
+          </button>
+        ))}
+      </div>
+    </div>
   )
 }
 
