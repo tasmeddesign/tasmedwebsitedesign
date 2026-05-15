@@ -139,7 +139,7 @@ export default function LifeAtTasmed() {
       {/* Two columns: Values + Testimonials */}
       <div style={{ display: 'flex', gap: '4rem', alignItems: 'flex-start', marginBottom: '4rem' }}>
 
-        {/* Left: 2x2 value cards */}
+        {/* Left: office photo collage */}
         <motion.div
           initial={{ opacity: 0, x: -24 }}
           animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -153,16 +153,33 @@ export default function LifeAtTasmed() {
             textTransform: 'uppercase',
             marginBottom: '1.25rem',
           }}>
-            What We Stand For
+            Inside Tasmed
           </p>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '1rem',
-          }}>
-            {VALUES.map((v, i) => (
-              <ValueCard key={v.title} value={v} index={i} isInView={isInView} />
-            ))}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr 1fr', gap: '0.75rem', height: '420px' }}>
+            {/* Large image left, spans 2 rows */}
+            <div style={{ gridRow: '1 / 3', borderRadius: '16px', overflow: 'hidden' }}>
+              <img
+                src="/Office%20enviroment%201.jpeg"
+                alt="Tasmed office"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
+            </div>
+            {/* Top right */}
+            <div style={{ borderRadius: '16px', overflow: 'hidden' }}>
+              <img
+                src="/Office%20enviroment%202.jpeg"
+                alt="Tasmed team"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
+            </div>
+            {/* Bottom right */}
+            <div style={{ borderRadius: '16px', overflow: 'hidden' }}>
+              <img
+                src="/Office%20enviroment%203.png"
+                alt="Tasmed workspace"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
+            </div>
           </div>
         </motion.div>
 
