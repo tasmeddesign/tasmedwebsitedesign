@@ -60,8 +60,8 @@ export default function GlobalPresence() {
   const [ringTarget, setRingTarget] = useState([])
 
   const globeMaterial = useMemo(() => new THREE.MeshPhongMaterial({
-    color: new THREE.Color('#f0eeea'),
-    shininess: 4,
+    color: new THREE.Color('#b8cce0'),
+    shininess: 8,
   }), [])
 
   useEffect(() => {
@@ -100,14 +100,13 @@ export default function GlobalPresence() {
   }, [])
 
   const getPolygonColor = useCallback((feature) => {
-    if (!highlightedCountry) return 'rgba(235,233,229,0.95)'
-    if (feature.properties.ADMIN === highlightedCountry) return 'rgba(26,47,122,0.18)'
-    return 'rgba(235,233,229,0.95)'
+    if (highlightedCountry && feature.properties.ADMIN === highlightedCountry) return '#4a7fc1'
+    return '#e8eedc'
   }, [highlightedCountry])
 
   const getPolygonStroke = useCallback((feature) => {
     if (highlightedCountry && feature.properties.ADMIN === highlightedCountry) return '#1a2f7a'
-    return '#9a97a3'
+    return '#8aabb8'
   }, [highlightedCountry])
 
   return (
@@ -246,8 +245,8 @@ export default function GlobalPresence() {
             height={700}
             backgroundColor="rgba(0,0,0,0)"
             globeMaterial={globeMaterial}
-            atmosphereColor="rgba(26,47,122,0.2)"
-            atmosphereAltitude={0.12}
+            atmosphereColor="#4a7fc1"
+            atmosphereAltitude={0.18}
             polygonsData={countries}
             polygonCapColor={getPolygonColor}
             polygonSideColor={() => 'rgba(26,47,122,0.04)'}
