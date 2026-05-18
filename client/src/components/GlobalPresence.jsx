@@ -48,7 +48,8 @@ const ALL_POINTS = [
   ...INDIA_STATES.map(p => ({ ...p, type: 'india' })),
 ]
 
-const GEOJSON_URL = 'https://raw.githubusercontent.com/vasturiano/react-globe.gl/master/example/datasets/ne_110m_admin_0_countries.geojson'
+const WORLD_GEOJSON = 'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_0_countries.geojson'
+const INDIA_GEOJSON = 'https://raw.githubusercontent.com/geohacker/india/master/country/india.geojson'
 
 export default function GlobalPresence() {
   const sectionRef = useRef(null)
@@ -65,9 +66,19 @@ export default function GlobalPresence() {
   }), [])
 
   useEffect(() => {
-    fetch(GEOJSON_URL)
-      .then(r => r.json())
-      .then(data => setCountries(data.features))
+    Promise.all([
+      fetch(WORLD_GEOJSON).then(r => r.json()),
+      fetch(INDIA_GEOJSON).then(r => r.json()),
+    ]).then(([worldData, indiaData]) => {
+      const worldWithoutIndia = worldData.features.filter(
+        f => f.properties.ADMIN !== 'India'
+      )
+      const indiaFeature = {
+        ...(indiaData.features ? indiaData.features[0] : indiaData),
+        properties: { ADMIN: 'India', NAME: 'India' },
+      }
+      setCountries([...worldWithoutIndia, indiaFeature])
+    })
   }, [])
 
   const handleGlobeReady = useCallback(() => {
