@@ -77,6 +77,33 @@ export default function GlobalPresence() {
     ctrl.autoRotateSpeed = 0.5
     ctrl.enableZoom = false
     globeRef.current.pointOfView({ lat: 20, lng: 80, altitude: 2 }, 0)
+
+    // Graticule grid lines (like amCharts GraticuleSeries)
+    const R = 101
+    const mat = new THREE.LineBasicMaterial({ color: 0x4a7899, opacity: 0.13, transparent: true })
+    const group = new THREE.Group()
+    const toV = (lat, lng) => {
+      const phi = (90 - lat) * (Math.PI / 180)
+      const th = (lng + 180) * (Math.PI / 180)
+      return new THREE.Vector3(
+        -R * Math.sin(phi) * Math.cos(th),
+         R * Math.cos(phi),
+         R * Math.sin(phi) * Math.sin(th)
+      )
+    }
+    // Parallels (latitude lines) every 30°
+    for (let lat = -60; lat <= 60; lat += 30) {
+      const pts = []
+      for (let lng = -180; lng <= 180; lng += 2) pts.push(toV(lat, lng))
+      group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), mat))
+    }
+    // Meridians (longitude lines) every 30°
+    for (let lng = -180; lng < 180; lng += 30) {
+      const pts = []
+      for (let lat = -90; lat <= 90; lat += 2) pts.push(toV(lat, lng))
+      group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), mat))
+    }
+    globeRef.current.scene().add(group)
   }, [])
 
   const focusOn = useCallback((lat, lng, name, country) => {
