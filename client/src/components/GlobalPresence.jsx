@@ -61,7 +61,7 @@ export default function GlobalPresence() {
   const [ringTarget, setRingTarget] = useState([])
 
   const globeMaterial = useMemo(() => new THREE.MeshPhongMaterial({
-    color: new THREE.Color('#eceae6'),
+    color: new THREE.Color('#f0eeea'),
     shininess: 4,
   }), [])
 
@@ -118,7 +118,7 @@ export default function GlobalPresence() {
 
   const getPolygonStroke = useCallback((feature) => {
     if (highlightedCountry && feature.properties.ADMIN === highlightedCountry) return '#1a2f7a'
-    return '#b0adb8'
+    return '#9a97a3'
   }, [highlightedCountry])
 
   return (
