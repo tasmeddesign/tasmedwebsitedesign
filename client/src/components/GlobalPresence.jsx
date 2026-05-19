@@ -85,14 +85,14 @@ export default function GlobalPresence() {
       </motion.div>
 
       {/* 2-col layout */}
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '5rem' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '4rem' }}>
 
         {/* Left sidebar */}
         <motion.div
           initial={{ opacity: 0, x: -24 }}
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
-          style={{ flex: '0 0 320px' }}
+          style={{ flex: '0 0 300px' }}
         >
           <div style={{ marginBottom: '2rem' }}>
             <h3 style={{
@@ -157,7 +157,7 @@ export default function GlobalPresence() {
           </div>
         </motion.div>
 
-        {/* Dotted World Map */}
+        {/* World Map */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
@@ -170,15 +170,6 @@ export default function GlobalPresence() {
             projectionConfig={{ scale: 153, center: [0, 10] }}
             style={{ width: '100%', height: 'auto' }}
           >
-            <defs>
-              <pattern id="dots-neutral" x="0" y="0" width="5" height="5" patternUnits="userSpaceOnUse">
-                <circle cx="2.5" cy="2.5" r="1.1" fill="#c8c4bc" />
-              </pattern>
-              <pattern id="dots-active" x="0" y="0" width="5" height="5" patternUnits="userSpaceOnUse">
-                <circle cx="2.5" cy="2.5" r="1.1" fill="#1a2f7a" />
-              </pattern>
-            </defs>
-
             <Geographies geography={GEO_URL}>
               {({ geographies }) =>
                 geographies.map(geo => {
@@ -187,9 +178,14 @@ export default function GlobalPresence() {
                     <Geography
                       key={geo.rsmKey}
                       geography={geo}
-                      fill={isActive ? 'url(#dots-active)' : 'url(#dots-neutral)'}
-                      stroke="none"
-                      style={{ outline: 'none', pointerEvents: 'none' }}
+                      fill={isActive ? '#1a2f7a' : '#dddbd6'}
+                      stroke="#f0eeea"
+                      strokeWidth={0.5}
+                      style={{
+                        default: { outline: 'none' },
+                        hover: { outline: 'none', fill: isActive ? '#1a2f7a' : '#c8c5be', transition: 'fill 0.2s' },
+                        pressed: { outline: 'none' },
+                      }}
                     />
                   )
                 })
@@ -200,11 +196,11 @@ export default function GlobalPresence() {
             {ALL_MARKERS.map(loc => (
               <Marker key={loc.name} coordinates={[loc.lng, loc.lat]}>
                 <circle
-                  r={loc.type === 'hq' ? 4 : 3}
-                  fill={active === loc.name ? '#1a2f7a' : '#2d52b8'}
-                  stroke="#fff"
+                  r={loc.type === 'hq' ? 5 : 4}
+                  fill={active === loc.name ? '#fff' : '#2d52b8'}
+                  stroke={active === loc.name ? '#1a2f7a' : '#fff'}
                   strokeWidth={1.5}
-                  style={{ cursor: 'pointer', pointerEvents: 'all' }}
+                  style={{ cursor: 'pointer' }}
                   onClick={e => { e.stopPropagation(); focusOn(loc.name) }}
                 />
               </Marker>
