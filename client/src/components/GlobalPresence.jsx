@@ -1,7 +1,6 @@
-import { useRef, useState, useEffect, useMemo, useCallback } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, useInView } from 'framer-motion'
-import Globe from 'react-globe.gl'
-import * as THREE from 'three'
+import createGlobe from 'cobe'
 
 const HQ = [
   { name: 'Chandigarh, India', lat: 30.7333, lng: 76.7794, country: 'India' },
@@ -42,99 +41,52 @@ const INDIA_STATES = [
   { name: 'West Bengal', lat: 22.9868, lng: 87.8550 },
 ]
 
-const ALL_POINTS = [
-  ...HQ.map(p => ({ ...p, type: 'hq' })),
-  ...INTERNATIONAL.map(p => ({ ...p, type: 'intl' })),
-  ...INDIA_STATES.map(p => ({ ...p, type: 'india' })),
+const COBE_MARKERS = [
+  ...HQ.map(p => ({ location: [p.lat, p.lng], size: 0.08 })),
+  ...INTERNATIONAL.map(p => ({ location: [p.lat, p.lng], size: 0.05 })),
+  ...INDIA_STATES.map(p => ({ location: [p.lat, p.lng], size: 0.03 })),
 ]
-
-const GEOJSON_URL = 'https://raw.githubusercontent.com/vasturiano/react-globe.gl/master/example/datasets/ne_110m_admin_0_countries.geojson'
 
 export default function GlobalPresence() {
   const sectionRef = useRef(null)
+  const canvasRef = useRef(null)
   const globeRef = useRef(null)
+  const phiRef = useRef(1.4) // start centered on India
   const isInView = useInView(sectionRef, { once: true, margin: '-80px' })
-  const [countries, setCountries] = useState([])
   const [active, setActive] = useState(null)
-  const [highlightedCountry, setHighlightedCountry] = useState(null)
-  const [ringTarget, setRingTarget] = useState([])
-
-  const globeMaterial = useMemo(() => new THREE.MeshPhongMaterial({
-    color: new THREE.Color('#b8cce0'),
-    shininess: 8,
-  }), [])
 
   useEffect(() => {
-    fetch(GEOJSON_URL)
-      .then(r => r.json())
-      .then(data => setCountries(data.features))
+    if (!canvasRef.current) return
+    globeRef.current = createGlobe(canvasRef.current, {
+      devicePixelRatio: 2,
+      width: 700 * 2,
+      height: 700 * 2,
+      phi: phiRef.current,
+      theta: 0.25,
+      dark: 0,
+      diffuse: 1.2,
+      mapSamples: 16000,
+      mapBrightness: 6,
+      baseColor: [1, 1, 1],
+      markerColor: [0.176, 0.322, 0.722],
+      glowColor: [0.92, 0.94, 1],
+      markers: COBE_MARKERS,
+      onRender: (state) => {
+        phiRef.current += 0.003
+        state.phi = phiRef.current
+      },
+    })
+    canvasRef.current.style.opacity = '1'
+    return () => globeRef.current?.destroy()
   }, [])
 
-  const handleGlobeReady = useCallback(() => {
-    if (!globeRef.current) return
-    const ctrl = globeRef.current.controls()
-    ctrl.autoRotate = true
-    ctrl.autoRotateSpeed = 0.5
-    ctrl.enableZoom = false
-    globeRef.current.pointOfView({ lat: 20, lng: 80, altitude: 2 }, 0)
-
-    // Graticule grid lines (like amCharts GraticuleSeries)
-    const R = 101
-    const mat = new THREE.LineBasicMaterial({ color: 0x4a7899, opacity: 0.13, transparent: true })
-    const group = new THREE.Group()
-    const toV = (lat, lng) => {
-      const phi = (90 - lat) * (Math.PI / 180)
-      const th = (lng + 180) * (Math.PI / 180)
-      return new THREE.Vector3(
-        -R * Math.sin(phi) * Math.cos(th),
-         R * Math.cos(phi),
-         R * Math.sin(phi) * Math.sin(th)
-      )
-    }
-    // Parallels (latitude lines) every 30°
-    for (let lat = -60; lat <= 60; lat += 30) {
-      const pts = []
-      for (let lng = -180; lng <= 180; lng += 2) pts.push(toV(lat, lng))
-      group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), mat))
-    }
-    // Meridians (longitude lines) every 30°
-    for (let lng = -180; lng < 180; lng += 30) {
-      const pts = []
-      for (let lat = -90; lat <= 90; lat += 2) pts.push(toV(lat, lng))
-      group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), mat))
-    }
-    globeRef.current.scene().add(group)
-  }, [])
-
-  const focusOn = useCallback((lat, lng, name, country) => {
+  const focusOn = useCallback((name) => {
     setActive(name)
-    setHighlightedCountry(country || null)
-    setRingTarget([{ lat, lng }])
-    if (!globeRef.current) return
-    const ctrl = globeRef.current.controls()
-    ctrl.autoRotate = false
-    globeRef.current.pointOfView({ lat, lng, altitude: 1.7 }, 1000)
-    setTimeout(() => {
-      if (globeRef.current) globeRef.current.controls().autoRotate = true
-    }, 5000)
   }, [])
 
   const resetHighlight = useCallback(() => {
     setActive(null)
-    setHighlightedCountry(null)
-    setRingTarget([])
-    if (globeRef.current) globeRef.current.controls().autoRotate = true
   }, [])
-
-  const getPolygonColor = useCallback((feature) => {
-    if (highlightedCountry && feature.properties.ADMIN === highlightedCountry) return '#4a7fc1'
-    return '#e8eedc'
-  }, [highlightedCountry])
-
-  const getPolygonStroke = useCallback((feature) => {
-    if (highlightedCountry && feature.properties.ADMIN === highlightedCountry) return '#1a2f7a'
-    return '#8aabb8'
-  }, [highlightedCountry])
 
   return (
     <section ref={sectionRef} onClick={resetHighlight} style={{ padding: '5rem 100px 5rem 150px' }}>
@@ -158,7 +110,6 @@ export default function GlobalPresence() {
         }}>
           Where We Are
         </span>
-
         <h2 style={{
           fontSize: '50px',
           fontWeight: 500,
@@ -169,7 +120,6 @@ export default function GlobalPresence() {
         }}>
           Our Presence
         </h2>
-
         <p style={{
           fontSize: '1rem',
           color: '#777',
@@ -203,11 +153,7 @@ export default function GlobalPresence() {
             }}>
               Presence In Over 20 States In India
             </h3>
-            <p style={{
-              fontSize: '0.9rem',
-              color: '#999',
-              lineHeight: 1.6,
-            }}>
+            <p style={{ fontSize: '0.9rem', color: '#999', lineHeight: 1.6 }}>
               We Are Honoured To Serve Across 20+ States.
             </p>
           </div>
@@ -227,7 +173,7 @@ export default function GlobalPresence() {
               key={loc.name}
               loc={loc}
               active={active === loc.name}
-              onClick={() => focusOn(loc.lat, loc.lng, loc.name, loc.country)}
+              onClick={() => focusOn(loc.name)}
             />
           ))}
 
@@ -253,7 +199,7 @@ export default function GlobalPresence() {
                 key={loc.name}
                 loc={loc}
                 active={active === loc.name}
-                onClick={() => focusOn(loc.lat, loc.lng, loc.name, loc.country)}
+                onClick={() => focusOn(loc.name)}
               />
             ))}
           </div>
@@ -266,36 +212,14 @@ export default function GlobalPresence() {
           transition={{ duration: 1, ease: 'easeOut', delay: 0.4 }}
           style={{ flexShrink: 0 }}
         >
-          <Globe
-            ref={globeRef}
-            width={700}
-            height={700}
-            backgroundColor="rgba(0,0,0,0)"
-            globeMaterial={globeMaterial}
-            atmosphereColor="#4a7fc1"
-            atmosphereAltitude={0.18}
-            polygonsData={countries}
-            polygonCapColor={getPolygonColor}
-            polygonSideColor={() => 'rgba(26,47,122,0.04)'}
-            polygonStrokeColor={getPolygonStroke}
-            polygonAltitude={d =>
-              highlightedCountry && d.properties.ADMIN === highlightedCountry ? 0.01 : 0.003
-            }
-            pointsData={ALL_POINTS}
-            pointColor={() => '#2d52b8'}
-            pointAltitude={0.02}
-            pointRadius={d => d.type === 'hq' ? 0.65 : 0.45}
-            pointResolution={16}
-            pointLabel={d =>
-              `<div style="background:#fff;color:#1a2f7a;padding:6px 14px;border-radius:8px;font-family:Outfit,sans-serif;font-size:13px;font-weight:500;white-space:nowrap;pointer-events:none;box-shadow:0 2px 12px rgba(0,0,0,0.15);border:1px solid #e0ddd8;letter-spacing:0.01em">${d.name}</div>`
-            }
-            onGlobeClick={resetHighlight}
-            ringsData={ringTarget}
-            ringColor={() => '#1a2f7a'}
-            ringMaxRadius={4}
-            ringPropagationSpeed={2.5}
-            ringRepeatPeriod={800}
-            onGlobeReady={handleGlobeReady}
+          <canvas
+            ref={canvasRef}
+            style={{
+              width: 700,
+              height: 700,
+              opacity: 0,
+              transition: 'opacity 1s ease',
+            }}
           />
         </motion.div>
 
