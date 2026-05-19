@@ -1,6 +1,8 @@
-import { useRef, useState, useEffect, useCallback } from 'react'
+import { useRef, useState, useCallback } from 'react'
 import { motion, useInView } from 'framer-motion'
-import createGlobe from 'cobe'
+import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps'
+
+const GEO_URL = 'https://raw.githubusercontent.com/vasturiano/react-globe.gl/master/example/datasets/ne_110m_admin_0_countries.geojson'
 
 const HQ = [
   { name: 'Chandigarh, India', lat: 30.7333, lng: 76.7794, country: 'India' },
@@ -18,78 +20,28 @@ const INTERNATIONAL = [
   { name: 'Uganda', lat: 0.3476, lng: 32.5825, country: 'Uganda' },
 ]
 
-const INDIA_STATES = [
-  { name: 'Andhra Pradesh', lat: 15.9129, lng: 79.7400 },
-  { name: 'Assam', lat: 26.2006, lng: 92.9376 },
-  { name: 'Bihar', lat: 25.0961, lng: 85.3131 },
-  { name: 'Chhattisgarh', lat: 21.2787, lng: 81.8661 },
-  { name: 'Gujarat', lat: 22.2587, lng: 71.1924 },
-  { name: 'Haryana', lat: 29.0588, lng: 76.0856 },
-  { name: 'Himachal Pradesh', lat: 31.1048, lng: 77.1734 },
-  { name: 'Jammu & Kashmir', lat: 33.7782, lng: 76.5762 },
-  { name: 'Jharkhand', lat: 23.6102, lng: 85.2799 },
-  { name: 'Karnataka', lat: 15.3173, lng: 75.7139 },
-  { name: 'Madhya Pradesh', lat: 22.9734, lng: 78.6569 },
-  { name: 'Maharashtra', lat: 19.7515, lng: 75.7139 },
-  { name: 'Odisha', lat: 20.9517, lng: 85.0985 },
-  { name: 'Punjab', lat: 31.1471, lng: 75.3412 },
-  { name: 'Rajasthan', lat: 27.0238, lng: 74.2179 },
-  { name: 'Tamil Nadu', lat: 11.1271, lng: 78.6569 },
-  { name: 'Telangana', lat: 18.1124, lng: 79.0193 },
-  { name: 'Uttar Pradesh', lat: 26.8467, lng: 80.9462 },
-  { name: 'Uttarakhand', lat: 30.0668, lng: 79.0193 },
-  { name: 'West Bengal', lat: 22.9868, lng: 87.8550 },
+const ALL_MARKERS = [
+  ...HQ.map(p => ({ ...p, type: 'hq' })),
+  ...INTERNATIONAL.map(p => ({ ...p, type: 'intl' })),
 ]
 
-const COBE_MARKERS = [
-  ...HQ.map(p => ({ location: [p.lat, p.lng], size: 0.08 })),
-  ...INTERNATIONAL.map(p => ({ location: [p.lat, p.lng], size: 0.05 })),
-  ...INDIA_STATES.map(p => ({ location: [p.lat, p.lng], size: 0.03 })),
-]
+const LOCATION_COUNTRY = Object.fromEntries([
+  ...HQ.map(p => [p.name, 'India']),
+  ...INTERNATIONAL.map(p => [p.name, p.country]),
+])
 
 export default function GlobalPresence() {
   const sectionRef = useRef(null)
-  const canvasRef = useRef(null)
-  const globeRef = useRef(null)
-  const phiRef = useRef(4.9) // start centered on India (~80°E)
   const isInView = useInView(sectionRef, { once: true, margin: '-80px' })
   const [active, setActive] = useState(null)
 
-  useEffect(() => {
-    if (!canvasRef.current) return
-    globeRef.current = createGlobe(canvasRef.current, {
-      devicePixelRatio: 2,
-      width: 700 * 2,
-      height: 700 * 2,
-      phi: phiRef.current,
-      theta: 0.3,
-      dark: 0,
-      diffuse: 1.2,
-      mapSamples: 16000,
-      mapBrightness: 6,
-      baseColor: [0.32, 0.36, 0.52],
-      markerColor: [0.176, 0.322, 0.722],
-      glowColor: [0.92, 0.94, 1],
-      markers: COBE_MARKERS,
-      onRender: (state) => {
-        phiRef.current += 0.003
-        state.phi = phiRef.current
-      },
-    })
-    canvasRef.current.style.opacity = '1'
-    return () => globeRef.current?.destroy()
-  }, [])
+  const highlightedCountry = LOCATION_COUNTRY[active] || null
 
-  const focusOn = useCallback((name) => {
-    setActive(name)
-  }, [])
-
-  const resetHighlight = useCallback(() => {
-    setActive(null)
-  }, [])
+  const focusOn = useCallback((name) => setActive(name), [])
+  const resetHighlight = useCallback(() => setActive(null), [])
 
   return (
-    <section ref={sectionRef} onClick={resetHighlight} style={{ padding: '5rem 100px 5rem 150px' }}>
+    <section ref={sectionRef} onClick={resetHighlight} style={{ padding: '5rem 150px' }}>
 
       {/* Header */}
       <motion.div
@@ -133,18 +85,18 @@ export default function GlobalPresence() {
       </motion.div>
 
       {/* 2-col layout */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8rem' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '5rem' }}>
 
         {/* Left sidebar */}
         <motion.div
           initial={{ opacity: 0, x: -24 }}
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
-          style={{ flex: '0 0 454px' }}
+          style={{ flex: '0 0 320px' }}
         >
           <div style={{ marginBottom: '2rem' }}>
             <h3 style={{
-              fontSize: '1.6rem',
+              fontSize: '1.4rem',
               fontWeight: 500,
               color: '#1a2f7a',
               fontFamily: "'Outfit', sans-serif",
@@ -205,22 +157,59 @@ export default function GlobalPresence() {
           </div>
         </motion.div>
 
-        {/* Globe */}
+        {/* Dotted World Map */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 1, ease: 'easeOut', delay: 0.4 }}
-          style={{ flexShrink: 0 }}
+          transition={{ duration: 0.9, ease: 'easeOut', delay: 0.3 }}
+          style={{ flex: 1 }}
+          onClick={e => e.stopPropagation()}
         >
-          <canvas
-            ref={canvasRef}
-            style={{
-              width: 700,
-              height: 700,
-              opacity: 0,
-              transition: 'opacity 1s ease',
-            }}
-          />
+          <ComposableMap
+            projection="geoNaturalEarth1"
+            projectionConfig={{ scale: 153, center: [0, 10] }}
+            style={{ width: '100%', height: 'auto' }}
+          >
+            <defs>
+              <pattern id="dots-neutral" x="0" y="0" width="5" height="5" patternUnits="userSpaceOnUse">
+                <circle cx="2.5" cy="2.5" r="1.1" fill="#c8c4bc" />
+              </pattern>
+              <pattern id="dots-active" x="0" y="0" width="5" height="5" patternUnits="userSpaceOnUse">
+                <circle cx="2.5" cy="2.5" r="1.1" fill="#1a2f7a" />
+              </pattern>
+            </defs>
+
+            <Geographies geography={GEO_URL}>
+              {({ geographies }) =>
+                geographies.map(geo => {
+                  const isActive = geo.properties.ADMIN === highlightedCountry
+                  return (
+                    <Geography
+                      key={geo.rsmKey}
+                      geography={geo}
+                      fill={isActive ? 'url(#dots-active)' : 'url(#dots-neutral)'}
+                      stroke="none"
+                      style={{ outline: 'none', pointerEvents: 'none' }}
+                    />
+                  )
+                })
+              }
+            </Geographies>
+
+            {/* Location markers */}
+            {ALL_MARKERS.map(loc => (
+              <Marker key={loc.name} coordinates={[loc.lng, loc.lat]}>
+                <circle
+                  r={loc.type === 'hq' ? 4 : 3}
+                  fill={active === loc.name ? '#1a2f7a' : '#2d52b8'}
+                  stroke="#fff"
+                  strokeWidth={1.5}
+                  style={{ cursor: 'pointer', pointerEvents: 'all' }}
+                  onClick={e => { e.stopPropagation(); focusOn(loc.name) }}
+                />
+              </Marker>
+            ))}
+          </ComposableMap>
         </motion.div>
 
       </div>
@@ -247,7 +236,7 @@ function LocationRow({ loc, active, onClick }) {
       }}
     >
       <span style={{
-        fontSize: '1.3rem',
+        fontSize: '1.2rem',
         fontWeight: 400,
         fontFamily: "'Outfit', sans-serif",
         color: active ? '#1a2f7a' : hovered ? '#1a2f7a' : '#1a1a1a',
