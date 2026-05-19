@@ -51,7 +51,7 @@ export default function GlobalPresence() {
   const sectionRef = useRef(null)
   const canvasRef = useRef(null)
   const globeRef = useRef(null)
-  const phiRef = useRef(1.4) // start centered on India
+  const phiRef = useRef(4.9) // start centered on India (~80°E)
   const isInView = useInView(sectionRef, { once: true, margin: '-80px' })
   const [active, setActive] = useState(null)
 
@@ -64,12 +64,12 @@ export default function GlobalPresence() {
       phi: phiRef.current,
       theta: 0.3,
       dark: 0,
-      diffuse: 0.8,
+      diffuse: 1.2,
       mapSamples: 16000,
-      mapBrightness: 1.8,
-      baseColor: [0.12, 0.22, 0.55],
+      mapBrightness: 6,
+      baseColor: [0.32, 0.36, 0.52],
       markerColor: [0.176, 0.322, 0.722],
-      glowColor: [0.88, 0.91, 0.98],
+      glowColor: [0.92, 0.94, 1],
       markers: COBE_MARKERS,
       onRender: (state) => {
         phiRef.current += 0.003
