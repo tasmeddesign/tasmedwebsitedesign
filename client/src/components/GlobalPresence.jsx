@@ -49,7 +49,50 @@ const ALL_POINTS = [
 ]
 
 const WORLD_URL = 'https://raw.githubusercontent.com/vasturiano/react-globe.gl/master/example/datasets/ne_110m_admin_0_countries.geojson'
-const INDIA_URL = 'https://raw.githubusercontent.com/geohacker/india/master/country/india.geojson'
+
+// Approximate polygons for Pakistan-administered Kashmir (AJK + Gilgit-Baltistan)
+// and Aksai Chin — India's official pre-2019 claim, rendered over the world base layer
+const INDIA_CLAIM_FEATURES = [
+  {
+    type: 'Feature',
+    properties: { ADMIN: 'India', NAME: 'India' },
+    geometry: {
+      type: 'Polygon',
+      coordinates: [[
+        // Azad Kashmir + Gilgit-Baltistan (counter-clockwise from SW)
+        [73.5, 33.3],
+        [74.7, 33.0],
+        [75.2, 33.5],
+        [76.2, 34.6],
+        [77.1, 35.5],
+        [77.8, 36.9],
+        [76.5, 37.1],
+        [75.0, 37.2],
+        [73.8, 37.1],
+        [73.0, 36.8],
+        [72.6, 35.8],
+        [73.0, 34.8],
+        [73.5, 33.3],
+      ]],
+    },
+  },
+  {
+    type: 'Feature',
+    properties: { ADMIN: 'India', NAME: 'India' },
+    geometry: {
+      type: 'Polygon',
+      coordinates: [[
+        // Aksai Chin
+        [78.0, 33.5],
+        [78.0, 35.5],
+        [80.5, 35.5],
+        [81.2, 34.2],
+        [79.8, 33.0],
+        [78.0, 33.5],
+      ]],
+    },
+  },
+]
 
 export default function GlobalPresence() {
   const sectionRef = useRef(null)
@@ -69,24 +112,8 @@ export default function GlobalPresence() {
     fetch(WORLD_URL)
       .then(r => r.json())
       .then(worldData => {
-        const worldWithoutIndia = worldData.features.filter(
-          f => f.properties.ADMIN !== 'India'
-        )
-        // Try to load India with correct official borders (J&K included)
-        fetch(INDIA_URL)
-          .then(r => r.json())
-          .then(indiaData => {
-            const geom = indiaData.features
-              ? indiaData.features[0].geometry
-              : indiaData.geometry
-            const indiaFeature = {
-              type: 'Feature',
-              properties: { ADMIN: 'India', NAME: 'India' },
-              geometry: geom,
-            }
-            setCountries([...worldWithoutIndia, indiaFeature])
-          })
-          .catch(() => setCountries(worldData.features))
+        // Append claim features (AJK + GB + Aksai Chin) rendered above world polygons
+        setCountries([...worldData.features, ...INDIA_CLAIM_FEATURES])
       })
   }, [])
 
@@ -267,9 +294,11 @@ export default function GlobalPresence() {
             polygonCapColor={getPolygonColor}
             polygonSideColor={() => 'rgba(26,47,122,0.04)'}
             polygonStrokeColor={getPolygonStroke}
-            polygonAltitude={d =>
-              highlightedCountry && d.properties.ADMIN === highlightedCountry ? 0.01 : 0.003
-            }
+            polygonAltitude={d => {
+              if (highlightedCountry && d.properties.ADMIN === highlightedCountry) return 0.012
+              if (d.properties.ADMIN === 'India') return 0.006
+              return 0.003
+            }}
             pointsData={ALL_POINTS}
             pointColor={() => '#2d52b8'}
             pointAltitude={0.02}
