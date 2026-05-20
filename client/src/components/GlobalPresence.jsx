@@ -102,6 +102,8 @@ export default function GlobalPresence() {
   const [active, setActive] = useState(null)
   const [highlightedCountry, setHighlightedCountry] = useState(null)
   const [ringTarget, setRingTarget] = useState([])
+  const [isPaused, setIsPaused] = useState(false)
+  const isPausedRef = useRef(false)
 
   const globeMaterial = useMemo(() => new THREE.MeshPhongMaterial({
     color: new THREE.Color('#eef3f7'),
@@ -135,7 +137,7 @@ export default function GlobalPresence() {
     ctrl.autoRotate = false
     globeRef.current.pointOfView({ lat, lng, altitude: 1.7 }, 1000)
     setTimeout(() => {
-      if (globeRef.current) globeRef.current.controls().autoRotate = true
+      if (globeRef.current && !isPausedRef.current) globeRef.current.controls().autoRotate = true
     }, 5000)
   }, [])
 
@@ -143,7 +145,14 @@ export default function GlobalPresence() {
     setActive(null)
     setHighlightedCountry(null)
     setRingTarget([])
-    if (globeRef.current) globeRef.current.controls().autoRotate = true
+    if (globeRef.current && !isPausedRef.current) globeRef.current.controls().autoRotate = true
+  }, [])
+
+  const toggleRotation = useCallback(() => {
+    const next = !isPausedRef.current
+    isPausedRef.current = next
+    setIsPaused(next)
+    if (globeRef.current) globeRef.current.controls().autoRotate = !next
   }, [])
 
   const getHexColor = useCallback((feature) => {
@@ -314,6 +323,47 @@ export default function GlobalPresence() {
             ringRepeatPeriod={800}
             onGlobeReady={handleGlobeReady}
           />
+
+          {/* Pause / Resume button */}
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '-1rem' }}>
+            <button
+              onClick={e => { e.stopPropagation(); toggleRotation() }}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.45rem',
+                background: 'none',
+                border: '1px solid #d0cdc8',
+                borderRadius: '999px',
+                padding: '0.45rem 1.1rem',
+                cursor: 'pointer',
+                fontFamily: "'Outfit', sans-serif",
+                fontSize: '0.78rem',
+                color: '#888',
+                letterSpacing: '0.03em',
+                transition: 'border-color 0.2s, color 0.2s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = '#1a2f7a'; e.currentTarget.style.color = '#1a2f7a' }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = '#d0cdc8'; e.currentTarget.style.color = '#888' }}
+            >
+              {isPaused ? (
+                <>
+                  <svg width="11" height="11" viewBox="0 0 11 11" fill="currentColor">
+                    <polygon points="2,1 10,5.5 2,10" />
+                  </svg>
+                  Resume Rotation
+                </>
+              ) : (
+                <>
+                  <svg width="11" height="11" viewBox="0 0 11 11" fill="currentColor">
+                    <rect x="1.5" y="1" width="3" height="9" rx="1" />
+                    <rect x="6.5" y="1" width="3" height="9" rx="1" />
+                  </svg>
+                  Pause Rotation
+                </>
+              )}
+            </button>
+          </div>
         </motion.div>
 
       </div>
