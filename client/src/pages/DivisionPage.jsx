@@ -1,5 +1,5 @@
 import { useParams, Navigate } from 'react-router-dom'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import Navbar from '../components/Navbar'
 
