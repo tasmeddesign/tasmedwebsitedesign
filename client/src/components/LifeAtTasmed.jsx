@@ -15,24 +15,10 @@ const STATS = [
 ]
 
 const EMPLOYEES = [
-  {
-    quote: 'This is my first and best career move. The work environment is genuinely supportive and growth opportunities are real.',
-    name: 'Rajiv Sharma',
-    role: 'Lead Chemist · Delhi NCR',
-    initials: 'RS',
-  },
-  {
-    quote: 'Every day knowing the medicines you help make are reaching patients in need — that sense of purpose drives everything.',
-    name: 'Priya Mehta',
-    role: 'Quality Assurance · Chandigarh',
-    initials: 'PM',
-  },
-  {
-    quote: 'Leadership genuinely invests in people here. Hard work is recognized and you are always given room to grow.',
-    name: 'Anil Kumar',
-    role: 'Sales Manager · Ahmedabad',
-    initials: 'AK',
-  },
+  { name: 'Rajiv Sharma',  role: 'Lead Chemist',          initials: 'RS', photo: null },
+  { name: 'Priya Mehta',   role: 'Quality Assurance',      initials: 'PM', photo: null },
+  { name: 'Anil Kumar',    role: 'Sales Manager',           initials: 'AK', photo: null },
+  { name: 'Sunita Rao',    role: 'R&D Scientist',           initials: 'SR', photo: null },
 ]
 
 export default function LifeAtTasmed() {
@@ -130,29 +116,63 @@ export default function LifeAtTasmed() {
         <OfficeCarousel />
       </motion.div>
 
-      {/* Employee cards — 3-column grid */}
+      {/* Team section */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.7, ease: 'easeOut', delay: 0.3 }}
+        style={{ marginBottom: '3rem' }}
       >
-        <p style={{
-          fontSize: '0.7rem',
-          color: '#aaa',
-          letterSpacing: '0.08em',
-          textTransform: 'uppercase',
-          marginBottom: '1.25rem',
+        {/* Heading row */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'flex-end',
+          justifyContent: 'space-between',
+          marginBottom: '2rem',
+          gap: '2rem',
         }}>
-          From Our Team
-        </p>
+          <h3 style={{
+            fontSize: '2.2rem',
+            fontWeight: 700,
+            color: '#1a1a1a',
+            fontFamily: "'Outfit', sans-serif",
+            lineHeight: 1.2,
+            letterSpacing: '-0.02em',
+            maxWidth: '460px',
+            margin: 0,
+          }}>
+            Our team is a powerhouse of talent, dedication, and care.
+          </h3>
+          <a
+            href="https://www.linkedin.com/company/tasmed"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-block',
+              background: '#1a2f7a',
+              color: '#fff',
+              padding: '0.75rem 1.8rem',
+              borderRadius: '999px',
+              fontFamily: "'Outfit', sans-serif",
+              fontSize: '0.9rem',
+              fontWeight: 500,
+              textDecoration: 'none',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
+            }}
+          >
+            View More
+          </a>
+        </div>
+
+        {/* 4-column photo grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '1.5rem',
-          marginBottom: '3rem',
+          gridTemplateColumns: 'repeat(4, 1fr)',
+          gap: '1.25rem',
         }}>
           {EMPLOYEES.map((emp, i) => (
-            <EmployeeCard key={emp.name} employee={emp} index={i} isInView={isInView} />
+            <TeamCard key={emp.name} employee={emp} index={i} isInView={isInView} />
           ))}
         </div>
       </motion.div>
@@ -345,85 +365,65 @@ function OfficeCarousel() {
   )
 }
 
-/* ── Employee card ── */
-function EmployeeCard({ employee, index, isInView }) {
+/* ── Team photo card ── */
+function TeamCard({ employee, index, isInView }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.55, ease: 'easeOut', delay: 0.35 + index * 0.1 }}
-      style={{
-        background: '#fff',
-        border: '1.5px solid #e2dfd9',
-        borderRadius: '20px',
-        padding: '2rem',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        textAlign: 'center',
-      }}
+      transition={{ duration: 0.55, ease: 'easeOut', delay: 0.35 + index * 0.08 }}
     >
-      {/* Avatar */}
+      {/* Photo / placeholder */}
       <div style={{
-        width: '72px',
-        height: '72px',
-        borderRadius: '50%',
-        background: 'linear-gradient(135deg, #18458F, #091C5C)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        color: '#fff',
-        fontSize: '1.1rem',
-        fontWeight: 600,
-        fontFamily: "'Outfit', sans-serif",
-        marginBottom: '1.25rem',
-        flexShrink: 0,
+        borderRadius: '16px',
+        overflow: 'hidden',
+        height: '300px',
+        marginBottom: '1rem',
+        background: employee.photo
+          ? undefined
+          : `linear-gradient(135deg, #dce8f5 0%, #c8d9ee 100%)`,
+        position: 'relative',
       }}>
-        {employee.initials}
+        {employee.photo ? (
+          <img
+            src={employee.photo}
+            alt={employee.name}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
+        ) : (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100%',
+          }}>
+            <span style={{
+              fontSize: '2.8rem',
+              fontWeight: 700,
+              color: '#1a2f7a',
+              opacity: 0.18,
+              fontFamily: "'Outfit', sans-serif",
+            }}>
+              {employee.initials}
+            </span>
+          </div>
+        )}
       </div>
 
-      {/* Quote mark */}
-      <span style={{
-        fontSize: '3rem',
-        lineHeight: 0.6,
-        color: '#ddd',
-        fontFamily: 'Georgia, serif',
-        marginBottom: '0.75rem',
-        display: 'block',
-      }}>
-        "
-      </span>
-
-      {/* Quote */}
-      <p style={{
-        fontSize: '0.9rem',
-        color: '#555',
-        lineHeight: 1.75,
-        fontStyle: 'italic',
-        flexGrow: 1,
-        marginBottom: '1.5rem',
-      }}>
-        {employee.quote}
-      </p>
-
-      {/* Divider + name */}
+      {/* Name */}
       <div style={{
-        borderTop: '1px solid #ece9e4',
-        paddingTop: '1.25rem',
-        width: '100%',
+        fontSize: '1.05rem',
+        fontWeight: 700,
+        color: '#1a1a1a',
+        fontFamily: "'Outfit', sans-serif",
+        marginBottom: '0.2rem',
       }}>
-        <div style={{
-          fontSize: '0.92rem',
-          fontWeight: 600,
-          color: '#1a1a1a',
-          fontFamily: "'Outfit', sans-serif",
-          marginBottom: '0.2rem',
-        }}>
-          {employee.name}
-        </div>
-        <div style={{ fontSize: '0.78rem', color: '#aaa' }}>
-          {employee.role}
-        </div>
+        {employee.name}
+      </div>
+
+      {/* Role */}
+      <div style={{ fontSize: '0.82rem', color: '#999' }}>
+        {employee.role}
       </div>
     </motion.div>
   )
