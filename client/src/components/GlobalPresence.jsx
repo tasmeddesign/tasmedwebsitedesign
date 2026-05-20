@@ -104,8 +104,8 @@ export default function GlobalPresence() {
   const [ringTarget, setRingTarget] = useState([])
 
   const globeMaterial = useMemo(() => new THREE.MeshPhongMaterial({
-    color: new THREE.Color('#b8cce0'),
-    shininess: 8,
+    color: new THREE.Color('#ccdde9'),
+    shininess: 6,
   }), [])
 
   useEffect(() => {
@@ -146,16 +146,11 @@ export default function GlobalPresence() {
     if (globeRef.current) globeRef.current.controls().autoRotate = true
   }, [])
 
-  const getPolygonColor = useCallback((feature) => {
-    if (highlightedCountry && feature.properties.ADMIN === highlightedCountry)
-      return 'rgba(26,47,122,0.55)'
-    return '#e8eedc'
-  }, [highlightedCountry])
-
-  const getPolygonStroke = useCallback((feature) => {
-    if (highlightedCountry && feature.properties.ADMIN === highlightedCountry)
-      return '#1a2f7a'
-    return '#8aabb8'
+  const getHexColor = useCallback((feature) => {
+    const admin = feature.properties.ADMIN
+    if (highlightedCountry && admin === highlightedCountry) return '#1a2f7a'
+    if (admin === 'India') return '#4a7fc1'
+    return '#8fb3cc'
   }, [highlightedCountry])
 
   return (
@@ -290,15 +285,20 @@ export default function GlobalPresence() {
             globeMaterial={globeMaterial}
             atmosphereColor="#4a7fc1"
             atmosphereAltitude={0.18}
-            polygonsData={countries}
-            polygonCapColor={getPolygonColor}
-            polygonSideColor={() => 'rgba(26,47,122,0.04)'}
-            polygonStrokeColor={getPolygonStroke}
-            polygonAltitude={d => {
-              if (highlightedCountry && d.properties.ADMIN === highlightedCountry) return 0.012
-              if (d.properties.ADMIN === 'India') return 0.006
-              return 0.003
+            hexPolygonsData={countries}
+            hexPolygonResolution={3}
+            hexPolygonMargin={0.4}
+            hexPolygonUseDots={true}
+            hexPolygonColor={getHexColor}
+            hexPolygonAltitude={d => {
+              const admin = d.properties.ADMIN
+              if (highlightedCountry && admin === highlightedCountry) return 0.015
+              if (admin === 'India') return 0.006
+              return 0.004
             }}
+            hexPolygonLabel={d =>
+              `<div style="background:#fff;color:#1a2f7a;padding:6px 14px;border-radius:8px;font-family:Outfit,sans-serif;font-size:13px;font-weight:500;white-space:nowrap;pointer-events:none;box-shadow:0 2px 12px rgba(0,0,0,0.15);border:1px solid #e0ddd8">${d.properties.ADMIN}</div>`
+            }
             pointsData={ALL_POINTS}
             pointColor={() => '#2d52b8'}
             pointAltitude={0.02}
