@@ -49,50 +49,7 @@ const ALL_POINTS = [
 ]
 
 const WORLD_URL = 'https://raw.githubusercontent.com/vasturiano/react-globe.gl/master/example/datasets/ne_110m_admin_0_countries.geojson'
-
-// Approximate polygons for Pakistan-administered Kashmir (AJK + Gilgit-Baltistan)
-// and Aksai Chin — India's official pre-2019 claim, rendered over the world base layer
-const INDIA_CLAIM_FEATURES = [
-  {
-    type: 'Feature',
-    properties: { ADMIN: 'India', NAME: 'India' },
-    geometry: {
-      type: 'Polygon',
-      coordinates: [[
-        // Azad Kashmir + Gilgit-Baltistan (counter-clockwise from SW)
-        [73.5, 33.3],
-        [74.7, 33.0],
-        [75.2, 33.5],
-        [76.2, 34.6],
-        [77.1, 35.5],
-        [77.8, 36.9],
-        [76.5, 37.1],
-        [75.0, 37.2],
-        [73.8, 37.1],
-        [73.0, 36.8],
-        [72.6, 35.8],
-        [73.0, 34.8],
-        [73.5, 33.3],
-      ]],
-    },
-  },
-  {
-    type: 'Feature',
-    properties: { ADMIN: 'India', NAME: 'India' },
-    geometry: {
-      type: 'Polygon',
-      coordinates: [[
-        // Aksai Chin
-        [78.0, 33.5],
-        [78.0, 35.5],
-        [80.5, 35.5],
-        [81.2, 34.2],
-        [79.8, 33.0],
-        [78.0, 33.5],
-      ]],
-    },
-  },
-]
+const INDIA_URL = '/india-correct.geojson'
 
 export default function GlobalPresence() {
   const sectionRef = useRef(null)
@@ -111,12 +68,13 @@ export default function GlobalPresence() {
   }), [])
 
   useEffect(() => {
-    fetch(WORLD_URL)
-      .then(r => r.json())
-      .then(worldData => {
-        // Append claim features (AJK + GB + Aksai Chin) rendered above world polygons
-        setCountries([...worldData.features, ...INDIA_CLAIM_FEATURES])
-      })
+    Promise.all([
+      fetch(WORLD_URL).then(r => r.json()),
+      fetch(INDIA_URL).then(r => r.json()),
+    ]).then(([worldData, indiaData]) => {
+      const withoutIndia = worldData.features.filter(f => f.properties.ADMIN !== 'India')
+      setCountries([...withoutIndia, ...indiaData.features])
+    })
   }, [])
 
   const handleGlobeReady = useCallback(() => {
@@ -298,12 +256,9 @@ export default function GlobalPresence() {
             hexPolygonMargin={0.3}
             hexPolygonUseDots={true}
             hexPolygonColor={getHexColor}
-            hexPolygonAltitude={d => {
-              const admin = d.properties.ADMIN
-              if (highlightedCountry && admin === highlightedCountry) return 0.025
-              if (admin === 'India') return 0.008
-              return 0.004
-            }}
+            hexPolygonAltitude={d =>
+              highlightedCountry && d.properties.ADMIN === highlightedCountry ? 0.02 : 0.004
+            }
             hexPolygonLabel={d =>
               `<div style="background:#fff;color:#1a2f7a;padding:6px 14px;border-radius:8px;font-family:Outfit,sans-serif;font-size:13px;font-weight:500;white-space:nowrap;pointer-events:none;box-shadow:0 2px 12px rgba(0,0,0,0.15);border:1px solid #e0ddd8">${d.properties.ADMIN}</div>`
             }
