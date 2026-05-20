@@ -158,6 +158,11 @@ export default function GlobalPresence() {
   const getHexColor = useCallback((feature) => {
     const admin = feature.properties.ADMIN
     if (highlightedCountry && admin === highlightedCountry) return '#2d52b8'
+    // When India is highlighted, melt Pakistan & China dots into the globe background
+    // so India's claim overlay (AJK, Aksai Chin) shows as a clean unbroken shape
+    if (highlightedCountry === 'India' && (admin === 'Pakistan' || admin === 'China')) {
+      return '#eef3f7'
+    }
     return '#b0bec9'
   }, [highlightedCountry])
 
@@ -300,8 +305,8 @@ export default function GlobalPresence() {
             hexPolygonColor={getHexColor}
             hexPolygonAltitude={d => {
               const admin = d.properties.ADMIN
-              if (highlightedCountry && admin === highlightedCountry) return 0.015
-              if (admin === 'India') return 0.006
+              if (highlightedCountry && admin === highlightedCountry) return 0.025
+              if (admin === 'India') return 0.008
               return 0.004
             }}
             hexPolygonLabel={d =>
