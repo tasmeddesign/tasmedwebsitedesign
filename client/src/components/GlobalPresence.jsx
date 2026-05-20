@@ -68,13 +68,15 @@ export default function GlobalPresence() {
   }), [])
 
   useEffect(() => {
-    Promise.all([
-      fetch(WORLD_URL).then(r => r.json()),
-      fetch(INDIA_URL).then(r => r.json()),
-    ]).then(([worldData, indiaData]) => {
-      const withoutIndia = worldData.features.filter(f => f.properties.ADMIN !== 'India')
-      setCountries([...withoutIndia, ...indiaData.features])
-    })
+    fetch(WORLD_URL)
+      .then(r => r.json())
+      .then(worldData => {
+        const withoutIndia = worldData.features.filter(f => f.properties.ADMIN !== 'India')
+        fetch(INDIA_URL)
+          .then(r => r.json())
+          .then(indiaData => setCountries([...withoutIndia, ...indiaData.features]))
+          .catch(() => setCountries(worldData.features))
+      })
   }, [])
 
   const handleGlobeReady = useCallback(() => {
