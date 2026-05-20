@@ -336,48 +336,46 @@ function ThemeSection({ theme, index }) {
 }
 
 function ProductCard({ product }) {
+  const [hovered, setHovered] = useState(false)
+
   return (
-    <div style={{
-      background: '#fff',
-      border: '1.5px solid #e8e5e0',
-      borderRadius: '16px',
-      padding: '1.75rem',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '0.6rem',
-    }}>
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        background: hovered
+          ? 'linear-gradient(135deg, #18458F 1%, #315F9C 24%, #2F4784 70%, #091C5C 100%)'
+          : '#fff',
+        border: hovered ? '1.5px solid transparent' : '1.5px solid #e8e5e0',
+        borderRadius: '16px',
+        padding: '1.75rem',
+        cursor: 'default',
+        transition: 'background 0.25s ease, border-color 0.25s ease',
+        minHeight: '90px',
+      }}
+    >
       <div style={{
         fontSize: '1rem',
         fontWeight: 600,
-        color: '#1a1a1a',
+        color: hovered ? '#fff' : '#1a1a1a',
         fontFamily: "'Outfit', sans-serif",
+        transition: 'color 0.25s ease',
+        marginBottom: hovered ? '0.65rem' : 0,
       }}>
         {product.name}
       </div>
       <div style={{
         fontSize: '0.875rem',
-        color: '#aaa',
+        color: 'rgba(255,255,255,0.72)',
         lineHeight: 1.65,
         fontFamily: "'Outfit', sans-serif",
-        flex: 1,
+        opacity: hovered ? 1 : 0,
+        maxHeight: hovered ? '120px' : 0,
+        overflow: 'hidden',
+        transition: 'opacity 0.25s ease, max-height 0.3s ease',
       }}>
         {product.desc}
       </div>
-      <a
-        href="#"
-        style={{
-          display: 'inline-block',
-          marginTop: '0.5rem',
-          fontSize: '0.8rem',
-          color: '#1a2f7a',
-          fontFamily: "'Outfit', sans-serif",
-          fontWeight: 500,
-          textDecoration: 'none',
-          letterSpacing: '0.02em',
-        }}
-      >
-        Learn More →
-      </a>
     </div>
   )
 }

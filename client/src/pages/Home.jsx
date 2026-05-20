@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import LoadingScreen from '../components/LoadingScreen'
 import Navbar from '../components/Navbar'
 import Hero from '../components/Hero'
@@ -9,11 +9,17 @@ import GlobalPresence from '../components/GlobalPresence'
 import LifeAtTasmed from '../components/LifeAtTasmed'
 
 export default function Home() {
-  const [loaded, setLoaded] = useState(false)
+  const skipLoader = useRef(!!sessionStorage.getItem('tasmed_loaded'))
+  const [loaded, setLoaded] = useState(skipLoader.current)
+
+  const handleLoaded = () => {
+    sessionStorage.setItem('tasmed_loaded', '1')
+    setLoaded(true)
+  }
 
   return (
     <div style={{ background: '#FCFAF7', minHeight: '100vh' }}>
-      <LoadingScreen onComplete={() => setLoaded(true)} />
+      {!skipLoader.current && <LoadingScreen onComplete={handleLoaded} />}
       <Navbar visible={loaded} />
       <Hero visible={loaded} />
       <AboutSection />
