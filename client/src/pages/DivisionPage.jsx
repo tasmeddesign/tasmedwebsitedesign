@@ -191,17 +191,45 @@ export default function DivisionPage() {
       </div>
 
       {/* ══════════════ HERO ══════════════ */}
-      <div style={{ display: 'flex', minHeight: '380px', overflow: 'hidden' }}>
+      <div style={{ position: 'relative', minHeight: '380px', overflow: 'hidden', background: '#fff' }}>
 
-        {/* Left — white */}
+        {/* Image — covers the right portion */}
+        {data.heroImage && (
+          <img
+            src={data.heroImage}
+            alt={data.title}
+            style={{
+              position: 'absolute',
+              right: 0,
+              top: 0,
+              height: '100%',
+              width: '62%',
+              objectFit: 'cover',
+              objectPosition: 'left center',
+              display: 'block',
+            }}
+          />
+        )}
+
+        {/* White gradient — bleeds over the left edge of the image, creating the smooth blend */}
         <div style={{
-          width: '50%',
-          flexShrink: 0,
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(to right, #ffffff 0%, #ffffff 34%, rgba(255,255,255,0.96) 42%, rgba(255,255,255,0.7) 52%, rgba(255,255,255,0.2) 62%, rgba(255,255,255,0) 70%)',
+          pointerEvents: 'none',
+          zIndex: 1,
+        }} />
+
+        {/* Content — sits above gradient */}
+        <div style={{
+          position: 'relative',
+          zIndex: 2,
           padding: '2.5rem 3rem 3rem 150px',
+          minHeight: '380px',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          background: '#fff',
+          maxWidth: '52%',
         }}>
           {/* Breadcrumb */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.75rem', fontSize: '0.8rem', color: '#9ca3af' }}>
@@ -241,14 +269,12 @@ export default function DivisionPage() {
             borderRadius: '14px',
             overflow: 'hidden',
             width: 'fit-content',
+            background: '#fff',
           }}>
             {data.stats.map((s, i) => (
               <div key={s.label} style={{ display: 'flex', alignItems: 'center' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem 1.4rem' }}>
-                  <div style={{
-                    width: '36px', height: '36px', borderRadius: '10px',
-                    background: '#eff6ff', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  }}>
+                  <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: '#eff6ff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     {s.icon === 'cube' ? (
                       <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#1a2f7a" strokeWidth="1.8">
                         <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" strokeLinecap="round" strokeLinejoin="round"/>
@@ -272,23 +298,6 @@ export default function DivisionPage() {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Right — hero image fills the space */}
-        <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
-          {data.heroImage && (
-            <img
-              src={data.heroImage}
-              alt={data.title}
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                objectPosition: 'center',
-                display: 'block',
-              }}
-            />
-          )}
         </div>
       </div>
 
