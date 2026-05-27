@@ -9,7 +9,7 @@ const DIVISION_DATA = {
   neurology: {
     title: 'Neurology',
     desc: 'Targeted neuro formulations addressing anxiety, depression, pain, spasm, and mood disorders.',
-    heroImage: '/Neurology image.png',
+    heroImage: '/neurology-hero.png',
     stats: [{ value: '7+', label: 'Therapy Areas' }, { value: '30+', label: 'Products' }],
     themes: [
       'Anticonvulsant / Anxiolytic',
@@ -39,7 +39,7 @@ const DIVISION_DATA = {
   gastroenterology: {
     title: 'Gastroenterology',
     desc: 'Sustained medicines for renal disorders, hyperacidity, and oesophagitis reflux.',
-    heroImage: '/Gastroenterology image.png',
+    heroImage: '/gastroenterology-hero.png',
     stats: [{ value: '4+', label: 'Therapy Areas' }, { value: '20+', label: 'Products' }],
     themes: ['Acid Reflux & GERD', 'Renal Disorders', 'Irritable Bowel', 'Liver Care'],
     products: [
@@ -55,7 +55,7 @@ const DIVISION_DATA = {
   cardiology: {
     title: 'Cardiology',
     desc: 'Medicines to cure hypertension, manage heart rhythms, and control blood pressure.',
-    heroImage: '/Cardiology image.png',
+    heroImage: '/cardiology-hero.png',
     stats: [{ value: '5+', label: 'Therapy Areas' }, { value: '25+', label: 'Products' }],
     themes: ['Hypertension', 'Heart Rhythm', 'Blood Pressure Management', 'Lipid Management', 'Anti-platelet'],
     products: [
@@ -71,7 +71,7 @@ const DIVISION_DATA = {
   'anti-diabetic': {
     title: 'Anti Diabetic',
     desc: 'Medicines to stabilise and control blood glucose levels among people with diabetes.',
-    heroImage: '/Diabetic image.png',
+    heroImage: '/diabetic-hero.png',
     stats: [{ value: '3+', label: 'Therapy Areas' }, { value: '15+', label: 'Products' }],
     themes: ['Blood Glucose Control', 'Insulin Management', 'Diabetic Neuropathy'],
     products: [
@@ -86,7 +86,7 @@ const DIVISION_DATA = {
   gynaecology: {
     title: 'Gynaecology',
     desc: 'Medical care for women during pregnancy, childbirth, and postpartum days.',
-    heroImage: '/Gynaecology image.png',
+    heroImage: '/gynaecology-hero.png',
     stats: [{ value: '4+', label: 'Therapy Areas' }, { value: '18+', label: 'Products' }],
     themes: ['Pregnancy Care', 'Postpartum Care', 'Hormonal Balance', 'Nutritional Support'],
     products: [
@@ -101,7 +101,7 @@ const DIVISION_DATA = {
   urology: {
     title: 'Urology',
     desc: 'Formulations exceeding industry benchmarks for the growing demand in urology medicines.',
-    heroImage: '/Urology image.png',
+    heroImage: '/urology-hero.png',
     stats: [{ value: '3+', label: 'Therapy Areas' }, { value: '12+', label: 'Products' }],
     themes: ['Urinary Tract Health', 'Prostate Care', 'Kidney Stones'],
     products: [
@@ -115,7 +115,7 @@ const DIVISION_DATA = {
   orthology: {
     title: 'Orthology',
     desc: 'A dedicated unit for bone care, joint health, and musculoskeletal wellbeing.',
-    heroImage: '/Orthology image.png',
+    heroImage: '/orthology-hero.png',
     stats: [{ value: '3+', label: 'Therapy Areas' }, { value: '14+', label: 'Products' }],
     themes: ['Bone Health', 'Joint & Muscle Care', 'Osteoporosis'],
     products: [
@@ -130,7 +130,7 @@ const DIVISION_DATA = {
   general: {
     title: 'General',
     desc: 'A dedicated unit for overall health, immunity, and everyday wellness.',
-    heroImage: null,
+    heroImage: '/general-hero.png',
     stats: [{ value: '3+', label: 'Therapy Areas' }, { value: '10+', label: 'Products' }],
     themes: ['Immunity & Wellness', 'Vitamins & Supplements', 'General Care'],
     products: [
