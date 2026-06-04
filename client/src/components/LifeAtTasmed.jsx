@@ -8,51 +8,60 @@ const STATS = [
   { end: 8,   suffix: '',  label: 'Countries Served' },
 ]
 
-const VALUES = [
+const PEOPLE = [
   {
-    num: '01',
-    title: 'Innovation & Ethics',
-    desc: 'Ideate, improvise, disrupt, and implement new ideas — always within the bounds of integrity.',
+    name: 'Rajiv Sharma',
+    role: 'Lead Chemist',
+    dept: 'R&D',
+    bio: 'Over 18 years shaping Tasmed\'s pharmaceutical formulation pipeline with precision chemistry.',
+    initials: 'RS',
+    color: '#1a4fa0',
+    photo: null,
   },
   {
-    num: '02',
-    title: 'Patient First',
-    desc: 'Every decision we make is rooted in delivering high-quality care today and tomorrow.',
+    name: 'Priya Mehta',
+    role: 'Head of Quality Assurance',
+    dept: 'Quality',
+    bio: 'Ensures every product leaving our GMP facility meets the highest international standards.',
+    initials: 'PM',
+    color: '#16763a',
+    photo: null,
   },
   {
-    num: '03',
-    title: 'Trust & Quality',
-    desc: 'Delivering quality at its core. Our GMP-certified processes are built on accountability.',
+    name: 'Anil Kumar',
+    role: 'National Sales Manager',
+    dept: 'Sales',
+    bio: 'Drives market presence across 20+ states, building lasting relationships with healthcare professionals.',
+    initials: 'AK',
+    color: '#7b2d8b',
+    photo: null,
   },
   {
-    num: '04',
-    title: 'Transparency & Consistency',
-    desc: 'Openness and accountability are not policies — they are our culture.',
+    name: 'Sunita Rao',
+    role: 'Senior R&D Scientist',
+    dept: 'Research',
+    bio: 'Pioneers novel drug delivery systems, translating clinical insights into patient-ready formulations.',
+    initials: 'SR',
+    color: '#c0392b',
+    photo: null,
   },
-]
-
-const EMPLOYEES = [
-  { name: 'Rajiv Sharma',  role: 'Lead Chemist',      initials: 'RS', photo: null },
-  { name: 'Priya Mehta',   role: 'Quality Assurance',  initials: 'PM', photo: null },
-  { name: 'Anil Kumar',    role: 'Sales Manager',       initials: 'AK', photo: null },
-  { name: 'Sunita Rao',    role: 'R&D Scientist',       initials: 'SR', photo: null },
 ]
 
 export default function LifeAtTasmed() {
   const sectionRef = useRef(null)
   const statsRef   = useRef(null)
-  const valuesRef  = useRef(null)
+  const imagesRef  = useRef(null)
   const quoteRef   = useRef(null)
-  const teamRef    = useRef(null)
+  const peopleRef  = useRef(null)
 
   const isInView    = useInView(sectionRef, { once: true, margin: '-80px' })
   const statsInView = useInView(statsRef,   { once: true, margin: '-60px' })
-  const valuesInView= useInView(valuesRef,  { once: true, margin: '-60px' })
+  const imagesInView= useInView(imagesRef,  { once: true, margin: '-60px' })
   const quoteInView = useInView(quoteRef,   { once: true, margin: '-60px' })
-  const teamInView  = useInView(teamRef,    { once: true, margin: '-60px' })
+  const peopleInView= useInView(peopleRef,  { once: true, margin: '-60px' })
 
   return (
-    <section ref={sectionRef} style={{ padding: '5rem 150px' }}>
+    <section ref={sectionRef} style={{ padding: '5rem 150px', background: '#FCFAF7' }}>
 
       {/* ── Header ── */}
       <motion.div
@@ -121,100 +130,24 @@ export default function LifeAtTasmed() {
         ))}
       </motion.div>
 
-      {/* ── Story: Values + Images ── */}
-      <div ref={valuesRef} style={{ display: 'flex', gap: '3.5rem', marginBottom: '4rem', alignItems: 'stretch' }}>
-
-        {/* Left — values */}
-        <motion.div
-          initial={{ opacity: 0, x: -24 }}
-          animate={valuesInView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.7, ease: 'easeOut' }}
-          style={{ flex: '0 0 52%', display: 'flex', flexDirection: 'column' }}
-        >
-          <p style={{
-            fontSize: '0.7rem',
-            color: '#aaa',
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-            marginBottom: '0.75rem',
-          }}>
-            What we stand for
-          </p>
-          <h3 style={{
-            fontSize: '2rem',
-            fontWeight: 500,
-            color: '#1a1a1a',
-            fontFamily: "'Outfit', sans-serif",
-            letterSpacing: '-0.02em',
-            lineHeight: 1.25,
-            marginBottom: '2rem',
-          }}>
-            Four principles that have guided every decision since 1993.
-          </h3>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '1rem',
-            flex: 1,
-          }}>
-            {VALUES.map((v, i) => (
-              <ValueCard key={v.title} value={v} index={i} isInView={valuesInView} />
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Right — images (portrait, not wide-short) */}
-        <motion.div
-          initial={{ opacity: 0, x: 24 }}
-          animate={valuesInView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.7, ease: 'easeOut', delay: 0.15 }}
-          style={{ flex: 1, display: 'flex', gap: '1rem' }}
-        >
-          {/* Tall left image */}
-          <div style={{
-            flex: '0 0 55%',
-            borderRadius: '20px',
-            overflow: 'hidden',
-            background: '#d0d8e4',
-            minHeight: '480px',
-          }}>
-            <img
-              src="/office-env-1.jpeg"
-              alt="Tasmed office"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-            />
-          </div>
-
-          {/* Two stacked images */}
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <div style={{
-              flex: 1,
-              borderRadius: '20px',
-              overflow: 'hidden',
-              background: '#d0d8e4',
-            }}>
-              <img
-                src="/office-env-2.jpeg"
-                alt="Tasmed team"
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-              />
-            </div>
-            <div style={{
-              flex: 1,
-              borderRadius: '20px',
-              overflow: 'hidden',
-              background: '#d0d8e4',
-            }}>
-              <img
-                src="/office-env-3.png"
-                alt="Tasmed workspace"
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-              />
-            </div>
-          </div>
-        </motion.div>
-      </div>
+      {/* ── Office images ── */}
+      <motion.div
+        ref={imagesRef}
+        initial={{ opacity: 0, y: 20 }}
+        animate={imagesInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.7, ease: 'easeOut' }}
+        style={{ display: 'flex', gap: '1rem', marginBottom: '4rem', height: '340px' }}
+      >
+        <div style={{ flex: '0 0 50%', borderRadius: '20px', overflow: 'hidden', background: '#d0d8e4' }}>
+          <img src="/office-env-1.jpeg" alt="Tasmed office" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+        </div>
+        <div style={{ flex: 1, borderRadius: '20px', overflow: 'hidden', background: '#d0d8e4' }}>
+          <img src="/office-env-2.jpeg" alt="Tasmed team" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+        </div>
+        <div style={{ flex: '0 0 22%', borderRadius: '20px', overflow: 'hidden', background: '#d0d8e4' }}>
+          <img src="/office-env-3.png" alt="Tasmed workspace" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+        </div>
+      </motion.div>
 
       {/* ── Quote ── */}
       <motion.div
@@ -267,33 +200,44 @@ export default function LifeAtTasmed() {
         </p>
       </motion.div>
 
-      {/* ── Team section ── */}
-      <motion.div
-        ref={teamRef}
-        initial={{ opacity: 0, y: 20 }}
-        animate={teamInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.7, ease: 'easeOut' }}
-        style={{ marginBottom: '3rem' }}
-      >
-        <div style={{
-          display: 'flex',
-          alignItems: 'flex-end',
-          justifyContent: 'space-between',
-          marginBottom: '2rem',
-          gap: '2rem',
-        }}>
-          <h3 style={{
-            fontSize: '2.2rem',
-            fontWeight: 700,
-            color: '#1a1a1a',
-            fontFamily: "'Outfit', sans-serif",
-            lineHeight: 1.2,
-            letterSpacing: '-0.02em',
-            maxWidth: '460px',
-            margin: 0,
-          }}>
-            Our team is a powerhouse of talent, dedication, and care.
-          </h3>
+      {/* ── Our People ── */}
+      <div ref={peopleRef}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={peopleInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          style={{
+            display: 'flex',
+            alignItems: 'flex-end',
+            justifyContent: 'space-between',
+            marginBottom: '2.25rem',
+            gap: '2rem',
+          }}
+        >
+          <div>
+            <p style={{
+              fontSize: '0.7rem',
+              color: '#aaa',
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              marginBottom: '0.5rem',
+              fontFamily: "'Outfit', sans-serif",
+            }}>
+              Our People
+            </p>
+            <h3 style={{
+              fontSize: '2.2rem',
+              fontWeight: 700,
+              color: '#1a1a1a',
+              fontFamily: "'Outfit', sans-serif",
+              lineHeight: 1.2,
+              letterSpacing: '-0.02em',
+              maxWidth: '460px',
+              margin: 0,
+            }}>
+              The people who bring Tasmed's mission to life.
+            </h3>
+          </div>
           <a
             href="https://www.linkedin.com/company/tasmed"
             target="_blank"
@@ -312,20 +256,16 @@ export default function LifeAtTasmed() {
               flexShrink: 0,
             }}
           >
-            View More
+            View on LinkedIn
           </a>
-        </div>
+        </motion.div>
 
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: '1.25rem',
-        }}>
-          {EMPLOYEES.map((emp, i) => (
-            <TeamCard key={emp.name} employee={emp} index={i} isInView={teamInView} />
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.25rem' }}>
+          {PEOPLE.map((person, i) => (
+            <PeopleCard key={person.name} person={person} index={i} isInView={peopleInView} />
           ))}
         </div>
-      </motion.div>
+      </div>
 
       {/* ── CTA strip ── */}
       <motion.div
@@ -337,6 +277,7 @@ export default function LifeAtTasmed() {
           border: '1.5px solid #e2dfd9',
           borderRadius: '20px',
           padding: '2.5rem 3rem',
+          marginTop: '3rem',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -431,117 +372,133 @@ function StatCounter({ end, suffix, label, isInView, delay, showDivider }) {
   )
 }
 
-/* ── Value card ── */
-function ValueCard({ value, index, isInView }) {
-  const [hovered, setHovered] = useState(false)
+/* ── People card ── */
+function PeopleCard({ person, index, isInView }) {
+  const [hov, setHov] = useState(false)
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
+      initial={{ opacity: 0, y: 24 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 + index * 0.08 }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      transition={{ duration: 0.55, ease: 'easeOut', delay: 0.05 + index * 0.1 }}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
       style={{
-        background: hovered
-          ? 'linear-gradient(135deg, #18458F 1%, #315F9C 24%, #2F4784 70%, #091C5C 100%)'
-          : '#fff',
-        border: hovered ? '1.5px solid transparent' : '1.5px solid #e8e5e0',
-        borderRadius: '16px',
-        padding: '1.5rem',
-        cursor: 'default',
-        transition: 'background 0.25s ease, border-color 0.25s ease',
-        position: 'relative',
+        borderRadius: '20px',
         overflow: 'hidden',
+        background: '#fff',
+        border: `1.5px solid ${hov ? person.color + '55' : '#ece9e3'}`,
+        boxShadow: hov ? `0 12px 32px ${person.color}18` : '0 1px 4px rgba(0,0,0,0.04)',
+        transition: 'border-color 0.22s, box-shadow 0.22s',
+        cursor: 'default',
       }}
     >
+      {/* Avatar area */}
       <div style={{
-        fontSize: '3.5rem',
-        fontWeight: 800,
-        color: hovered ? 'rgba(255,255,255,0.07)' : 'rgba(26,47,122,0.06)',
-        fontFamily: "'Outfit', sans-serif",
-        lineHeight: 1,
-        position: 'absolute',
-        top: '0.5rem',
-        right: '1rem',
-        letterSpacing: '-0.04em',
-        userSelect: 'none',
-        transition: 'color 0.25s ease',
-      }}>
-        {value.num}
-      </div>
-      <h4 style={{
-        fontSize: '0.95rem',
-        fontWeight: 600,
-        color: hovered ? '#fff' : '#1a1a1a',
-        fontFamily: "'Outfit', sans-serif",
-        marginBottom: '0.5rem',
+        height: '200px',
+        background: person.photo
+          ? undefined
+          : `linear-gradient(135deg, ${person.color}22 0%, ${person.color}44 100%)`,
         position: 'relative',
-        transition: 'color 0.25s ease',
-      }}>
-        {value.title}
-      </h4>
-      <p style={{
-        fontSize: '0.82rem',
-        color: hovered ? 'rgba(255,255,255,0.7)' : '#aaa',
-        lineHeight: 1.65,
-        fontFamily: "'Outfit', sans-serif",
-        position: 'relative',
-        transition: 'color 0.25s ease',
-      }}>
-        {value.desc}
-      </p>
-    </motion.div>
-  )
-}
-
-/* ── Team photo card ── */
-function TeamCard({ employee, index, isInView }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.55, ease: 'easeOut', delay: 0.1 + index * 0.08 }}
-    >
-      <div style={{
-        borderRadius: '16px',
         overflow: 'hidden',
-        height: '300px',
-        marginBottom: '1rem',
-        background: employee.photo ? undefined : 'linear-gradient(135deg, #dce8f5 0%, #c8d9ee 100%)',
-        position: 'relative',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}>
-        {employee.photo ? (
+        {person.photo ? (
           <img
-            src={employee.photo}
-            alt={employee.name}
+            src={person.photo}
+            alt={person.name}
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
           />
         ) : (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+          <>
+            {/* Large watermark initials */}
             <span style={{
-              fontSize: '2.8rem',
-              fontWeight: 700,
-              color: '#1a2f7a',
-              opacity: 0.18,
+              fontSize: '6rem',
+              fontWeight: 800,
+              color: person.color,
+              opacity: 0.12,
               fontFamily: "'Outfit', sans-serif",
+              userSelect: 'none',
+              lineHeight: 1,
+              position: 'absolute',
             }}>
-              {employee.initials}
+              {person.initials}
             </span>
-          </div>
+            {/* Centered initials circle */}
+            <div style={{
+              width: '72px',
+              height: '72px',
+              borderRadius: '50%',
+              background: person.color,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'relative',
+              zIndex: 1,
+              boxShadow: `0 4px 16px ${person.color}44`,
+            }}>
+              <span style={{
+                fontSize: '1.5rem',
+                fontWeight: 700,
+                color: '#fff',
+                fontFamily: "'Outfit', sans-serif",
+              }}>
+                {person.initials}
+              </span>
+            </div>
+          </>
         )}
+
+        {/* Dept tag on avatar */}
+        <span style={{
+          position: 'absolute',
+          top: '12px',
+          right: '12px',
+          background: '#fff',
+          color: person.color,
+          fontSize: '0.68rem',
+          fontWeight: 700,
+          padding: '0.2rem 0.7rem',
+          borderRadius: '999px',
+          fontFamily: "'Outfit', sans-serif",
+          letterSpacing: '0.02em',
+        }}>
+          {person.dept}
+        </span>
       </div>
-      <div style={{
-        fontSize: '1.05rem',
-        fontWeight: 700,
-        color: '#1a1a1a',
-        fontFamily: "'Outfit', sans-serif",
-        marginBottom: '0.2rem',
-      }}>
-        {employee.name}
-      </div>
-      <div style={{ fontSize: '0.82rem', color: '#999' }}>
-        {employee.role}
+
+      {/* Info area */}
+      <div style={{ padding: '1.2rem 1.25rem 1.4rem' }}>
+        <div style={{
+          fontSize: '1rem',
+          fontWeight: 700,
+          color: '#1a1a1a',
+          fontFamily: "'Outfit', sans-serif",
+          marginBottom: '0.2rem',
+          lineHeight: 1.2,
+        }}>
+          {person.name}
+        </div>
+        <div style={{
+          fontSize: '0.78rem',
+          color: person.color,
+          fontFamily: "'Outfit', sans-serif",
+          fontWeight: 500,
+          marginBottom: '0.75rem',
+        }}>
+          {person.role}
+        </div>
+        <p style={{
+          fontSize: '0.78rem',
+          color: '#aaa',
+          lineHeight: 1.6,
+          fontFamily: "'Outfit', sans-serif",
+          margin: 0,
+        }}>
+          {person.bio}
+        </p>
       </div>
     </motion.div>
   )
